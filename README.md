@@ -1,3 +1,10 @@
+> _This repository is maintained by the Gradle Enterprise Solutions team, as one of several publicly available repositories:_
+> - _[Gradle Enterprise Build Configuration Samples][ge-build-config-samples]_
+> - _[Gradle Enterprise Build Optimization Experiments][ge-build-optimization-experiments]_
+> - _[Gradle Enterprise Build Validation Scripts][ge-build-validation-scripts]_
+> - _[Common Custom User Data Gradle Plugin][ccud-gradle-plugin]_
+> - _[Common Custom User Data Maven Extension][ccud-maven-extension] (this repository)_
+
 ## Common Custom User Data Maven Extension [![Maven Central](https://img.shields.io/maven-central/v/com.gradle/common-custom-user-data-maven-extension)](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension) [![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.gradle.org/scans)
 
 ### Overview
@@ -78,9 +85,19 @@ server URL and renamed to `gradle-enterprise.xml`.
 
 Refer to the [changelog](https://github.com/gradle/gradle-enterprise-build-config-samples/blob/master/common-custom-user-data-maven-extension/CHANGELOG.md) to see detailed changes on the versions.
 
-### License
+## Learn more
 
-The Gradle Enterprise Common Custom User Data Maven Extension is open-source software released under the [Apache 2.0 License][apache-license].
+Visit our website to learn more about [Gradle Enterprise][gradle-enterprise].
 
+## License
+
+The Gradle Enterprise Common Custom User Data Maven extension is open-source software released under the [Apache 2.0 License][apache-license].
+
+[ge-build-config-samples]: https://github.com/gradle/gradle-enterprise-build-config-samples
+[ge-build-optimization-experiments]: https://github.com/gradle/gradle-enterprise-build-optimization-experiments
+[ge-build-validation-scripts]: https://github.com/gradle/gradle-enterprise-build-validation-scripts
+[ccud-gradle-plugin]: https://github.com/gradle/common-custom-user-data-gradle-plugin
+[ccud-maven-extension]: https://github.com/gradle/common-custom-user-data-maven-extension
+[gradle-enterprise]: https://gradle.com/enterprise
 [apache-license]: https://www.apache.org/licenses/LICENSE-2.0.html
 
