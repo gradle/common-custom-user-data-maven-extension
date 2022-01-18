@@ -14,6 +14,8 @@ You can leverage this extension for your project in one of two ways:
 1. Apply the published extension directly in your `.mvn/extensions.xml` and immediately benefit from enhanced build scans
 2. Copy this repository and develop a customized version of the extension to standardize Gradle Enterprise usage across multiple projects
 
+## Captured data
+
 The additional tags, links and custom values captured by this extension include:
 - A tag representing the operating system
 - A tag representing how the build was invoked, be that from your IDE (IDEA, Eclipse) or from the command-line
