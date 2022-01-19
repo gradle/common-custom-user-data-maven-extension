@@ -59,7 +59,7 @@ the script with the following bindings:
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
 
-See [here](https://github.com/gradle/gradle-enterprise-build-config-samples/blob/master/common-custom-user-data-maven-extension/.mvn/gradle-enterprise-custom-user-data.groovy) for an example.
+See [here](.mvn/gradle-enterprise-custom-user-data.groovy) for an example.
 
 ## Developing a customized version of the extension
 
