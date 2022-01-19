@@ -74,13 +74,6 @@ extension. The project sources provide a good template to get started with your 
 
 Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) for more details on the key types available for use.
 
-## Providing Gradle Enterprise configuration in your custom Maven extension
-
-At this time, the Gradle Enterprise server URL cannot be provided programmatically, and must be specified in a `gradle-enterprise.xml` file.
-To avoid adding this configuration file to every project, it can be added to the `src/main/resources` directory so that it will be packaged in the root of your custom
-extension, and discovered by Gradle Enterprise when loading the extension.  This project includes a `gradle-enterprise.sample.xml` file, which should be modified with your
-server URL and renamed to `gradle-enterprise.xml`.
-
 ## Changelog
 
 Refer to the [changelog](https://github.com/gradle/gradle-enterprise-build-config-samples/blob/master/common-custom-user-data-maven-extension/CHANGELOG.md) to see detailed changes on the versions.
