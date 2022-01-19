@@ -69,14 +69,14 @@ This approach has a number of benefits:
 - Tailor the build scan enhancements to exactly the set of tags, links and custom values you require
 - Standardize the configuration for connecting to Gradle Enterprise and the remote build cache in your organization, removing the need for each project to specify this configuration
 
-If your customized extension provides all required Gradle Enterprise configuration, then a consumer project will get all the benefits of Gradle Enterprise simply by applying the
-extension. The project sources provide a good template to get started with your own extension.
+If your customized extension provides all required Gradle Enterprise configuration, then a consumer project will get all the benefits of Gradle Enterprise simply by applying the extension. The
+project sources provide a good template to get started with your own extension.
 
 Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) for more details on the key types available for use.
 
 ## Changelog
 
-Refer to the [changelog](https://github.com/gradle/gradle-enterprise-build-config-samples/blob/master/common-custom-user-data-maven-extension/CHANGELOG.md) to see detailed changes on the versions.
+Refer to the [changelog](CHANGELOG.md) to see detailed changes on the versions.
 
 ## Learn more
 
@@ -93,4 +93,3 @@ The Gradle Enterprise Common Custom User Data Maven extension is open-source sof
 [ccud-maven-extension]: https://github.com/gradle/common-custom-user-data-maven-extension
 [gradle-enterprise]: https://gradle.com/enterprise
 [apache-license]: https://www.apache.org/licenses/LICENSE-2.0.html
-
