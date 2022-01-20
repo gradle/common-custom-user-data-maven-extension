@@ -21,7 +21,9 @@ requires the [Gradle Enterprise Maven extension](https://search.maven.org/artifa
 an effect.
 
 In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
-is the same file where you have already declared the Gradle Enterprise Maven extension. See [here](.mvn/extensions.xml) for an example.
+is the same file where you have already declared the Gradle Enterprise Maven extension.
+
+See [here](.mvn/extensions.xml) for an example.
 
 ### Version compatibility
 
