@@ -11,8 +11,8 @@ The Common Custom User Data Maven extension for Gradle Enterprise enhances publi
 by adding a set of tags, links and custom values that have proven to be useful for many projects building with Gradle Enterprise.
 
 You can leverage this extension for your project in one of two ways:
-1. Apply the published extension directly in your `.mvn/extensions.xml` and immediately benefit from enhanced build scans
-2. Copy this repository and develop a customized version of the extension to standardize Gradle Enterprise usage across multiple projects
+1. [Apply the published extension](#applying-the-published-extension) directly in your `.mvn/extensions.xml` and immediately benefit from enhanced build scans
+2. Copy this repository and [develop a customized version of the extension](#developing-a-customized-version-of-the-extension) to standardize Gradle Enterprise usage across multiple projects
 
 ## Applying the published extension
 
