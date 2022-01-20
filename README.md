@@ -45,7 +45,7 @@ The additional tags, links and custom values captured by this extension include:
 See [CustomBuildScanEnhancements.java](./src/main/java/com/gradle/CustomBuildScanEnhancements.java) for details on what data is
 captured and under which conditions.
 
-## Capturing additional tag, links and values in your build scans
+## Capturing additional tags, links and values in your build scans
 
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default. The additional configuration happens in a specific
 Groovy script. This is a good intermediate step before creating your own extension.
