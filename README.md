@@ -23,6 +23,17 @@ an effect.
 In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
 is the same file where you have already declared the Gradle Enterprise Maven extension. See [here](.mvn/extensions.xml) for an example.
 
+### Version compatibility
+
+This table details the version compatibility of the Common Custom User Data Maven extension with the Gradle Enterprise Maven extension.
+
+| Common Custom User Data Maven extension versions | Gradle Enterprise Maven extension versions |
+| ------------------------------------------------ | ------------------------------------------ |
+| `1.8+`                                           | `1.11+`                                    |
+| `1.7` - `1.7.3`                                  | `1.10.1+`                                  |
+| `1.3` - `1.6`                                    | `1.6.5+`                                   |
+| `1.0` - `1.2`                                    | `1.0+`                                     |
+
 ## Captured data
 
 The additional tags, links and custom values captured by this extension include:
@@ -33,17 +44,6 @@ The additional tags, links and custom values captured by this extension include:
 
 See [CustomBuildScanEnhancements.java](./src/main/java/com/gradle/CustomBuildScanEnhancements.java) for details on what data is
 captured and under which conditions.
-
-## Version compatibility
-
-This table details the version compatibility of the Common Custom User Data Maven extension with the Gradle Enterprise Maven extension.
-
-| Common Custom User Data Maven extension versions | Gradle Enterprise Maven extension versions |
-| ------------------------------------------------ | ------------------------------------------ |
-| `1.8+`                                           | `1.11+`                                    |
-| `1.7` - `1.7.3`                                  | `1.10.1+`                                  |
-| `1.3` - `1.6`                                    | `1.6.5+`                                   |
-| `1.0` - `1.2`                                    | `1.0+`                                     |
 
 ## Capturing additional tag, links and values in your build scans
 
