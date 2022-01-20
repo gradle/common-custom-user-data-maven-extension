@@ -14,6 +14,15 @@ You can leverage this extension for your project in one of two ways:
 1. Apply the published extension directly in your `.mvn/extensions.xml` and immediately benefit from enhanced build scans
 2. Copy this repository and develop a customized version of the extension to standardize Gradle Enterprise usage across multiple projects
 
+## Applying the published extension
+
+The Common Custom User Data Maven extension is available in [Maven Central](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension). This extension
+requires the [Gradle Enterprise Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have
+an effect.
+
+In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
+is the same file where you have already declared the Gradle Enterprise Maven extension. See [here](.mvn/extensions.xml) for an example.
+
 ## Captured data
 
 The additional tags, links and custom values captured by this extension include:
@@ -35,14 +44,6 @@ This table details the version compatibility of the Common Custom User Data Mave
 | `1.7` - `1.7.3`                                  | `1.10.1+`                                  |
 | `1.3` - `1.6`                                    | `1.6.5+`                                   |
 | `1.0` - `1.2`                                    | `1.0+`                                     |
-
-## Applying the published extension
-
-The Common Custom User Data Maven extension is available in [Maven Central](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension). This extension
-requires the [Gradle Enterprise Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have an effect.
-
-In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project.
-The `extensions.xml` file is the same file where you have already declared the Gradle Enterprise Maven extension. See [here](.mvn/extensions.xml) for an example.
 
 ## Capturing additional tag, links and values in your build scans
 
