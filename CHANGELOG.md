@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 - Detect GoCD CI and add respective custom CI tag, values and links
+- Detect `skipTests`, `maven.test.skip`, `skipITs` system properties and set corresponding custom values named `switches.*`
 
 ## [1.9] - 2021-11-11
 - Change the type of the `log` variable bound for custom Groovy scripts to `org.slf4j.Logger` (may affect custom Groovy scripts)
