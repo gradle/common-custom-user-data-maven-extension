@@ -1,7 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## Unreleased
+
+## [1.10] - 2022-01-24
 - Detect GoCD CI and add respective custom CI tag, values and links
 - Detect `skipTests`, `maven.test.skip`, `skipITs` system properties and set corresponding custom values named `switches.*`
 
@@ -90,23 +92,24 @@ All notable changes to this project will be documented in this file.
 ## [1.0] - 2020-05-25
 Initial release.
 
-[Unreleased]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.9...HEAD
-[1.9]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.8.1...common-custom-user-data-maven-extension-1.9
-[1.8.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.8...common-custom-user-data-maven-extension-1.8.1
-[1.8]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.7.3...common-custom-user-data-maven-extension-1.8
-[1.7.3]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.7.2...common-custom-user-data-maven-extension-1.7.3
-[1.7.2]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.7.1...common-custom-user-data-maven-extension-1.7.2
-[1.7.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.7...common-custom-user-data-maven-extension-1.7.1
-[1.7]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.6...common-custom-user-data-maven-extension-1.7
-[1.6]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.5...common-custom-user-data-maven-extension-1.6
-[1.5]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.4.1...common-custom-user-data-maven-extension-1.5
-[1.4.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.4...common-custom-user-data-maven-extension-1.4.1
-[1.4]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.3.2...common-custom-user-data-maven-extension-1.4
-[1.3.2]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.3.1...common-custom-user-data-maven-extension-1.3.2
-[1.3.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.3...common-custom-user-data-maven-extension-1.3.1
-[1.3]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.2...common-custom-user-data-maven-extension-1.3
-[1.2]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.1.1...common-custom-user-data-maven-extension-1.2
-[1.1.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.1...common-custom-user-data-maven-extension-1.1.1
-[1.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.0.1...common-custom-user-data-maven-extension-1.1
-[1.0.1]: https://github.com/gradle/gradle-enterprise-build-config-samples/compare/common-custom-user-data-maven-extension-1.0...common-custom-user-data-maven-extension-1.0.1
-[1.0]: https://github.com/gradle/gradle-enterprise-build-config-samples/releases/tag/common-custom-user-data-maven-extension-1.0
+[Unreleased]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.10...HEAD
+[1.10]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.9...common-custom-user-data-maven-extension-1.10
+[1.9]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.8.1...common-custom-user-data-maven-extension-1.9
+[1.8.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.8...common-custom-user-data-maven-extension-1.8.1
+[1.8]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.7.3...common-custom-user-data-maven-extension-1.8
+[1.7.3]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.7.2...common-custom-user-data-maven-extension-1.7.3
+[1.7.2]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.7.1...common-custom-user-data-maven-extension-1.7.2
+[1.7.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.7...common-custom-user-data-maven-extension-1.7.1
+[1.7]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.6...common-custom-user-data-maven-extension-1.7
+[1.6]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.5...common-custom-user-data-maven-extension-1.6
+[1.5]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.4.1...common-custom-user-data-maven-extension-1.5
+[1.4.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.4...common-custom-user-data-maven-extension-1.4.1
+[1.4]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.3.2...common-custom-user-data-maven-extension-1.4
+[1.3.2]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.3.1...common-custom-user-data-maven-extension-1.3.2
+[1.3.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.3...common-custom-user-data-maven-extension-1.3.1
+[1.3]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.2...common-custom-user-data-maven-extension-1.3
+[1.2]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.1.1...common-custom-user-data-maven-extension-1.2
+[1.1.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.1...common-custom-user-data-maven-extension-1.1.1
+[1.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.0.1...common-custom-user-data-maven-extension-1.1
+[1.0.1]: https://github.com/gradle/common-custom-user-data-maven-extension/compare/common-custom-user-data-maven-extension-1.0...common-custom-user-data-maven-extension-1.0.1
+[1.0]: https://github.com/gradle/common-custom-user-data-maven-extension/releases/tag/common-custom-user-data-maven-extension-1.0
