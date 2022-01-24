@@ -152,6 +152,7 @@
                         <version>3.0.0-M5</version>
                         <configuration>
                             <arguments>-Dscan=false</arguments>
+                            <pushChanges>false</pushChanges>
                         </configuration>
                     </plugin>
                     <plugin>
