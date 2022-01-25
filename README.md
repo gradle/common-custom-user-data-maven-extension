@@ -79,7 +79,7 @@ Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) 
 
 ## Changelog
 
-Refer to the [release history](/releases) to see detailed changes on the versions.
+Refer to the [release history](https://github.com/gradle/common-custom-user-data-maven-extension/releases) to see detailed changes on the versions.
 
 ## Learn more
 
