@@ -9,7 +9,6 @@
     <url>https://github.com/gradle/common-custom-user-data-maven-extension</url>
 
     <properties>
-        <project.scm.id>github</project.scm.id>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
