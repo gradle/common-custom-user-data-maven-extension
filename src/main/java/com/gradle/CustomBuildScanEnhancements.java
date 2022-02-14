@@ -15,11 +15,10 @@ import static com.gradle.Utils.appendIfMissing;
 import static com.gradle.Utils.envVariable;
 import static com.gradle.Utils.execAndCheckSuccess;
 import static com.gradle.Utils.execAndGetStdOut;
-import static com.gradle.Utils.firstSysPropertyKeyStartingWith;
 import static com.gradle.Utils.isNotEmpty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
-import static com.gradle.Utils.stripPrefix;
+
 import static com.gradle.Utils.sysProperty;
 import static com.gradle.Utils.urlEncode;
 
@@ -51,16 +50,11 @@ final class CustomBuildScanEnhancements {
 
     private void captureIde() {
         if (!isCi()) {
-            Optional<String> newIdeaVersion = sysProperty("idea.version");
-            Optional<String> oldIdeaVersion = firstSysPropertyKeyStartingWith("idea.version");
+            Optional<String> ideaVersion = sysProperty("idea.version");
             Optional<String> eclipseVersion = sysProperty("eclipse.buildId");
-
-            if (newIdeaVersion.isPresent()) {
+            if (ideaVersion.isPresent()) {
                 buildScan.tag("IntelliJ IDEA");
-                buildScan.value("IntelliJ IDEA version", newIdeaVersion.get());
-            } else if (oldIdeaVersion.isPresent()) {
-                buildScan.tag("IntelliJ IDEA");
-                buildScan.value("IntelliJ IDEA version", stripPrefix("idea.version", oldIdeaVersion.get()));
+                buildScan.value("IntelliJ IDEA version", ideaVersion.get());
             } else if (eclipseVersion.isPresent()) {
                 buildScan.tag("Eclipse");
                 buildScan.value("Eclipse version", eclipseVersion.get());
