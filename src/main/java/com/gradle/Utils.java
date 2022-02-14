@@ -42,14 +42,6 @@ final class Utils {
         return sysProperty(name).map(Duration::parse);
     }
 
-    static Optional<String> firstSysPropertyKeyStartingWith(String keyPrefix) {
-        return System.getProperties().keySet().stream()
-            .filter(s -> s instanceof String)
-            .map(s -> (String) s)
-            .filter(s -> s.startsWith(keyPrefix))
-            .findFirst();
-    }
-
     static boolean isNotEmpty(String value) {
         return value != null && !value.isEmpty();
     }
