@@ -11,6 +11,7 @@
     <captureGoalInputFiles>true</captureGoalInputFiles>
     <backgroundBuildScanUpload>#{isFalse(env['GITHUB_ACTIONS'])}</backgroundBuildScanUpload>
     <publish>ALWAYS</publish>
+    <publishIfAuthenticated>true</publishIfAuthenticated>
   </buildScan>
   <buildCache>
     <local>
