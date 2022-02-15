@@ -17,4 +17,4 @@ jobs:
       - name: Build with Maven
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
-        run: ./mvnw clean verify -Dscan=false -B
+        run: ./mvnw clean verify -B
