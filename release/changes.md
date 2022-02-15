@@ -1,1 +1,0 @@
-- [FIX] - Remove special logic to deal with old versions of IntelliJ
