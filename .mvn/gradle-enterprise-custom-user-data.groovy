@@ -11,5 +11,5 @@ buildScan.tag(project.name)
 // Add a custom value based on a property of the `Session`
 buildScan.value('parallel', session.parallel as String)
 
-// Enable storing in the remote build cache based on the presence of a `CI` environment variable
-buildCache.remote.storeEnabled = session.systemProperties.containsKey('CI')
+// Enable storing in the remote build cache based on the presence of a `CI` environment variable.
+buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null
