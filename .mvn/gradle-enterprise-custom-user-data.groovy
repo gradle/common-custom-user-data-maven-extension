@@ -11,5 +11,5 @@ buildScan.tag(project.name)
 // Add a custom value based on a property of the `Session`
 buildScan.value('parallel', session.parallel as String)
 
-// Enable storing in the local build cache
+// Enable local build caching
 buildCache.local.enabled = true
