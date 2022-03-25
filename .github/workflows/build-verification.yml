@@ -16,5 +16,5 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_SOLUTIONS_ACCESS_TOKEN }}
         run: ./mvnw clean verify -B
