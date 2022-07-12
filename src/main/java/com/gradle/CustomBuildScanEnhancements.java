@@ -306,6 +306,11 @@ final class CustomBuildScanEnhancements {
                 if (branch.isPresent()) {
                     return branch.get();
                 }
+            } else if (isGitLab()){
+                Optional<String> branch = Utils.envVariable("CI_COMMIT_REF_NAME");
+                if (branch.isPresent()) {
+                    return branch.get();
+                }
             }
             return gitCommand.get();
         }
@@ -318,6 +323,9 @@ final class CustomBuildScanEnhancements {
             return Utils.envVariable("HUDSON_URL").isPresent();
         }
 
+        private boolean isGitLab() {
+            return Utils.envVariable("GITLAB_CI").isPresent();
+        }
     }
 
     private void captureSkipTestsFlags() {
