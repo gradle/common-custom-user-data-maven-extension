@@ -18,7 +18,6 @@ import static com.gradle.Utils.execAndGetStdOut;
 import static com.gradle.Utils.isNotEmpty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
-
 import static com.gradle.Utils.sysProperty;
 import static com.gradle.Utils.urlEncode;
 
@@ -199,8 +198,7 @@ final class CustomBuildScanEnhancements {
             if (Stream.of(azureServerUrl, azureProject, buildId).allMatch(Optional::isPresent)) {
                 //noinspection OptionalGetWithoutIsPresent
                 String buildUrl = String.format("%s%s/_build/results?buildId=%s",
-                        azureServerUrl.get(), azureProject.get(), buildId.get()
-                );
+                    azureServerUrl.get(), azureProject.get(), buildId.get());
                 buildScan.link("Azure Pipelines build", buildUrl);
             } else if (azureServerUrl.isPresent()) {
                 buildScan.link("Azure Pipelines", azureServerUrl.get());
@@ -329,7 +327,7 @@ final class CustomBuildScanEnhancements {
                 if (branch.isPresent()) {
                     return branch.get();
                 }
-            } else if (isGitLab()){
+            } else if (isGitLab()) {
                 Optional<String> branch = Utils.envVariable("CI_COMMIT_REF_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
@@ -358,6 +356,7 @@ final class CustomBuildScanEnhancements {
         private boolean isAzurePipelines() {
             return Utils.envVariable("TF_BUILD").isPresent();
         }
+
     }
 
     private void captureSkipTestsFlags() {
