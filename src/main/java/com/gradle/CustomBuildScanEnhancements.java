@@ -18,7 +18,6 @@ import static com.gradle.Utils.execAndGetStdOut;
 import static com.gradle.Utils.isNotEmpty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
-
 import static com.gradle.Utils.sysProperty;
 import static com.gradle.Utils.urlEncode;
 
@@ -306,7 +305,7 @@ final class CustomBuildScanEnhancements {
                 if (branch.isPresent()) {
                     return branch.get();
                 }
-            } else if (isGitLab()){
+            } else if (isGitLab()) {
                 Optional<String> branch = Utils.envVariable("CI_COMMIT_REF_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
@@ -326,6 +325,7 @@ final class CustomBuildScanEnhancements {
         private boolean isGitLab() {
             return Utils.envVariable("GITLAB_CI").isPresent();
         }
+
     }
 
     private void captureSkipTestsFlags() {
