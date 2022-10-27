@@ -3,6 +3,9 @@ package com.gradle;
 import com.gradle.maven.extension.api.scan.BuildScanApi;
 import org.apache.maven.execution.MavenSession;
 
+import java.util.AbstractMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Consumer;
@@ -69,16 +72,31 @@ final class CustomBuildScanEnhancements {
 
     private void captureCiMetadata() {
         if (isJenkins() || isHudson()) {
-            envVariable("BUILD_URL").ifPresent(url ->
-                buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
-            envVariable("BUILD_NUMBER").ifPresent(value ->
-                buildScan.value("CI build number", value));
-            envVariable("NODE_NAME").ifPresent(value ->
-                addCustomValueAndSearchLink("CI node", value));
-            envVariable("JOB_NAME").ifPresent(value ->
-                addCustomValueAndSearchLink("CI job", value));
-            envVariable("STAGE_NAME").ifPresent(value ->
-                addCustomValueAndSearchLink("CI stage", value));
+            if (isJenkins() || isHudson()) {
+                Optional<String> buildUrl = envVariable("BUILD_URL");
+                Optional<String> buildNumber = envVariable("BUILD_NUMBER");
+                Optional<String> nodeName = envVariable("NODE_NAME");
+                Optional<String> jobName = envVariable("JOB_NAME");
+                Optional<String> stageName = envVariable("STAGE_NAME");
+
+                buildUrl.ifPresent(url ->
+                    buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
+                buildNumber.ifPresent(value ->
+                    buildScan.value("CI build number", value));
+                nodeName.ifPresent(value ->
+                    addCustomValueAndSearchLink("CI node", value));
+                jobName.ifPresent(value ->
+                    addCustomValueAndSearchLink("CI job", value));
+                stageName.ifPresent(value ->
+                    addCustomValueAndSearchLink("CI stage", value));
+
+                jobName.ifPresent(j -> buildNumber.ifPresent(b -> {
+                    Map<String, String> params = new LinkedHashMap<>();
+                    params.put("CI job", j);
+                    params.put("CI build number", b);
+                    addSearchLinkForCustomValues(buildScan, "CI pipeline", params);
+                }));
+            }
         }
 
         if (isTeamCity()) {
@@ -380,6 +398,16 @@ final class CustomBuildScanEnhancements {
         // creating customs links requires the server url to be fully configured
         buildScan.value(name, value);
         buildScan.buildFinished(result -> addSearchLinkForCustomValue(buildScan, linkLabel, name, value));
+    }
+
+    private static void addSearchLinkForCustomValues(BuildScanApi buildScan, String linkLabel, Map<String, String> values) {
+        // the parameters for a link querying multiple custom values look like:
+        // search.names=name1,name2&search.values=value1,value2
+        // this reduction groups all names and all values together in order to properly generate the query
+        values.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey()) // results in a deterministic order of link parameters
+            .reduce((a, b) -> new AbstractMap.SimpleEntry<>(a.getKey() + "," + b.getKey(), a.getValue() + "," + b.getValue()))
+            .ifPresent(x -> buildScan.buildFinished(result -> addSearchLinkForCustomValue(buildScan, linkLabel, x.getKey(), x.getValue())));
     }
 
     private static void addSearchLinkForCustomValue(BuildScanApi buildScan, String linkLabel, String name, String value) {
