@@ -15,8 +15,6 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Build with Maven
+        run: ./mvnw clean verify -B
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_SOLUTIONS_ACCESS_TOKEN }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_SOLUTIONS_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_SOLUTIONS_CACHE_PASSWORD }}
-        run: ./mvnw clean verify -B
