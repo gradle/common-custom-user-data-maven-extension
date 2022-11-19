@@ -52,17 +52,36 @@ final class CustomBuildScanEnhancements {
 
     private void captureIde() {
         if (!isCi()) {
+            Optional<String> ideaVendorName = sysProperty("idea.vendor.name");
             Optional<String> ideaVersion = sysProperty("idea.version");
             Optional<String> eclipseVersion = sysProperty("eclipse.buildId");
-            if (ideaVersion.isPresent()) {
-                buildScan.tag("IntelliJ IDEA");
-                buildScan.value("IntelliJ IDEA version", ideaVersion.get());
+            Optional<String> ideaSync = sysProperty("idea.sync.active");
+
+            if (ideaVendorName.isPresent()) {
+                String ideaVendorNameValue = ideaVendorName.get();
+                if (ideaVendorNameValue.equals("JetBrains")) {
+                    tagIde("IntelliJ IDEA", ideaVersion.orElse(""));
+                }
+            } else if (ideaVersion.isPresent()) {
+                // this case should be handled by the ideaVendorName condition but keeping it for compatibility reason (ideaVendorName started with 2020.1)
+                tagIde("IntelliJ IDEA", ideaVersion.get());
             } else if (eclipseVersion.isPresent()) {
-                buildScan.tag("Eclipse");
-                buildScan.value("Eclipse version", eclipseVersion.get());
+                // this case should be handled by the ideaVendorName condition but keeping it for compatibility reason (ideaVendorName started with 2020.1)
+                tagIde("Eclipse", eclipseVersion.get());
             } else {
                 buildScan.tag("Cmd Line");
             }
+
+            if (ideaSync.isPresent()) {
+                buildScan.tag("IDE sync");
+            }
+        }
+    }
+
+    private void tagIde(String ideLabel, String version) {
+        buildScan.tag(ideLabel);
+        if (!version.isEmpty()) {
+            buildScan.value(ideLabel + " version", version);
         }
     }
 
@@ -102,8 +121,7 @@ final class CustomBuildScanEnhancements {
         if (isTeamCity()) {
             Optional<String> teamCityConfigFile = projectProperty("teamcity.configuration.properties.file");
             Optional<String> buildId = projectProperty("teamcity.build.id");
-            if (teamCityConfigFile.isPresent()
-                && buildId.isPresent()) {
+            if (teamCityConfigFile.isPresent() && buildId.isPresent()) {
                 Properties properties = readPropertiesFile(teamCityConfigFile.get());
                 String teamCityServerUrl = properties.getProperty("teamcity.serverUrl");
                 if (teamCityServerUrl != null) {
