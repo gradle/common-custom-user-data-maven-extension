@@ -8,7 +8,9 @@
     <allowUntrusted>false</allowUntrusted>
   </server>
   <buildScan>
-    <captureGoalInputFiles>true</captureGoalInputFiles>
+    <capture>
+        <goalInputFiles>true</goalInputFiles>
+    </capture>
     <backgroundBuildScanUpload>#{isFalse(env['GITHUB_ACTIONS'])}</backgroundBuildScanUpload>
     <publish>ALWAYS</publish>
     <publishIfAuthenticated>true</publishIfAuthenticated>
