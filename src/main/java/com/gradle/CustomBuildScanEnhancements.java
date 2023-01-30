@@ -14,11 +14,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static com.gradle.CiUtils.isAzurePipelines;
+import static com.gradle.CiUtils.isBamboo;
+import static com.gradle.CiUtils.isBitrise;
+import static com.gradle.CiUtils.isCi;
+import static com.gradle.CiUtils.isCircleCI;
+import static com.gradle.CiUtils.isGitHubActions;
+import static com.gradle.CiUtils.isGitLab;
+import static com.gradle.CiUtils.isGoCD;
+import static com.gradle.CiUtils.isHudson;
+import static com.gradle.CiUtils.isJenkins;
+import static com.gradle.CiUtils.isTeamCity;
+import static com.gradle.CiUtils.isTravis;
 import static com.gradle.Utils.appendIfMissing;
 import static com.gradle.Utils.envVariable;
 import static com.gradle.Utils.execAndCheckSuccess;
 import static com.gradle.Utils.execAndGetStdOut;
 import static com.gradle.Utils.isNotEmpty;
+import static com.gradle.Utils.projectProperty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
 import static com.gradle.Utils.sysProperty;
@@ -51,7 +64,7 @@ final class CustomBuildScanEnhancements {
     }
 
     private void captureIde() {
-        if (!CiUtils.isCi()) {
+        if (!isCi()) {
             Optional<String> ideaVendorName = sysProperty("idea.vendor.name");
             Optional<String> ideaVersion = sysProperty("idea.version");
             Optional<String> eclipseVersion = sysProperty("eclipse.buildId");
@@ -86,39 +99,37 @@ final class CustomBuildScanEnhancements {
     }
 
     private void captureCiOrLocal() {
-        buildScan.tag(CiUtils.isCi() ? "CI" : "LOCAL");
+        buildScan.tag(isCi() ? "CI" : "LOCAL");
     }
 
     private void captureCiMetadata() {
-        if (CiUtils.isJenkins() || CiUtils.isHudson()) {
-            if (CiUtils.isJenkins() || CiUtils.isHudson()) {
-                Optional<String> buildUrl = envVariable("BUILD_URL");
-                Optional<String> buildNumber = envVariable("BUILD_NUMBER");
-                Optional<String> nodeName = envVariable("NODE_NAME");
-                Optional<String> jobName = envVariable("JOB_NAME");
-                Optional<String> stageName = envVariable("STAGE_NAME");
+        if (isJenkins() || isHudson()) {
+            Optional<String> buildUrl = envVariable("BUILD_URL");
+            Optional<String> buildNumber = envVariable("BUILD_NUMBER");
+            Optional<String> nodeName = envVariable("NODE_NAME");
+            Optional<String> jobName = envVariable("JOB_NAME");
+            Optional<String> stageName = envVariable("STAGE_NAME");
 
-                buildUrl.ifPresent(url ->
-                    buildScan.link(CiUtils.isJenkins() ? "Jenkins build" : "Hudson build", url));
-                buildNumber.ifPresent(value ->
-                    buildScan.value("CI build number", value));
-                nodeName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI node", value));
-                jobName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI job", value));
-                stageName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI stage", value));
+            buildUrl.ifPresent(url ->
+                buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
+            buildNumber.ifPresent(value ->
+                buildScan.value("CI build number", value));
+            nodeName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI node", value));
+            jobName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI job", value));
+            stageName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI stage", value));
 
-                jobName.ifPresent(j -> buildNumber.ifPresent(b -> {
-                    Map<String, String> params = new LinkedHashMap<>();
-                    params.put("CI job", j);
-                    params.put("CI build number", b);
-                    addSearchLinkForCustomValues(buildScan, "CI pipeline", params);
-                }));
-            }
+            jobName.ifPresent(j -> buildNumber.ifPresent(b -> {
+                Map<String, String> params = new LinkedHashMap<>();
+                params.put("CI job", j);
+                params.put("CI build number", b);
+                addSearchLink(buildScan, "CI pipeline", params);
+            }));
         }
 
-        if (CiUtils.isTeamCity()) {
+        if (isTeamCity()) {
             Optional<String> teamcityBuildPropertiesFile = envVariable("TEAMCITY_BUILD_PROPERTIES_FILE");
             if (teamcityBuildPropertiesFile.isPresent()) {
                 Properties buildProperties = readPropertiesFile(teamcityBuildPropertiesFile.get());
@@ -152,7 +163,7 @@ final class CustomBuildScanEnhancements {
             }
         }
 
-        if (CiUtils.isCircleCI()) {
+        if (isCircleCI()) {
             envVariable("CIRCLE_BUILD_URL").ifPresent(url ->
                 buildScan.link("CircleCI build", url));
             envVariable("CIRCLE_BUILD_NUM").ifPresent(value ->
@@ -163,7 +174,7 @@ final class CustomBuildScanEnhancements {
                 addCustomValueAndSearchLink("CI workflow", value));
         }
 
-        if (CiUtils.isBamboo()) {
+        if (isBamboo()) {
             envVariable("bamboo_resultsUrl").ifPresent(url ->
                 buildScan.link("Bamboo build", url));
             envVariable("bamboo_buildNumber").ifPresent(value ->
@@ -176,7 +187,7 @@ final class CustomBuildScanEnhancements {
                 addCustomValueAndSearchLink("CI agent", value));
         }
 
-        if (CiUtils.isGitHubActions()) {
+        if (isGitHubActions()) {
             Optional<String> gitHubRepository = envVariable("GITHUB_REPOSITORY");
             Optional<String> gitHubRunId = envVariable("GITHUB_RUN_ID");
             if (gitHubRepository.isPresent() && gitHubRunId.isPresent()) {
@@ -188,7 +199,7 @@ final class CustomBuildScanEnhancements {
                 addCustomValueAndSearchLink("CI run", value));
         }
 
-        if (CiUtils.isGitLab()) {
+        if (isGitLab()) {
             envVariable("CI_JOB_URL").ifPresent(url ->
                 buildScan.link("GitLab build", url));
             envVariable("CI_PIPELINE_URL").ifPresent(url ->
@@ -199,7 +210,7 @@ final class CustomBuildScanEnhancements {
                 addCustomValueAndSearchLink("CI stage", value));
         }
 
-        if (CiUtils.isTravis()) {
+        if (isTravis()) {
             envVariable("TRAVIS_BUILD_WEB_URL").ifPresent(url ->
                 buildScan.link("Travis build", url));
             envVariable("TRAVIS_BUILD_NUMBER").ifPresent(value ->
@@ -209,14 +220,14 @@ final class CustomBuildScanEnhancements {
             envVariable("TRAVIS_EVENT_TYPE").ifPresent(buildScan::tag);
         }
 
-        if (CiUtils.isBitrise()) {
+        if (isBitrise()) {
             envVariable("BITRISE_BUILD_URL").ifPresent(url ->
                 buildScan.link("Bitrise build", url));
             envVariable("BITRISE_BUILD_NUMBER").ifPresent(value ->
                 buildScan.value("CI build number", value));
         }
 
-        if (CiUtils.isGoCD()) {
+        if (isGoCD()) {
             Optional<String> pipelineName = envVariable("GO_PIPELINE_NAME");
             Optional<String> pipelineNumber = envVariable("GO_PIPELINE_COUNTER");
             Optional<String> stageName = envVariable("GO_STAGE_NAME");
@@ -240,7 +251,7 @@ final class CustomBuildScanEnhancements {
                 addCustomValueAndSearchLink("CI stage", value));
         }
 
-        if(CiUtils.isAzurePipelines()) {
+        if(isAzurePipelines()) {
             Optional<String> azureServerUrl = envVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
             Optional<String> azureProject = envVariable("SYSTEM_TEAMPROJECT");
             Optional<String> buildId = envVariable("BUILD_BUILDID");
@@ -319,18 +330,18 @@ final class CustomBuildScanEnhancements {
         }
 
         private String getGitBranchName(Supplier<String> gitCommand) {
-            if (CiUtils.isJenkins() || CiUtils.isHudson()) {
-                Optional<String> branch = Utils.envVariable("BRANCH_NAME");
+            if (isJenkins() || isHudson()) {
+                Optional<String> branch = envVariable("BRANCH_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
-            } else if (CiUtils.isGitLab()) {
-                Optional<String> branch = Utils.envVariable("CI_COMMIT_REF_NAME");
+            } else if (isGitLab()) {
+                Optional<String> branch = envVariable("CI_COMMIT_REF_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
-            } else if (CiUtils.isAzurePipelines()){
-                Optional<String> branch = Utils.envVariable("BUILD_SOURCEBRANCH");
+            } else if (isAzurePipelines()){
+                Optional<String> branch = envVariable("BUILD_SOURCEBRANCH");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
@@ -347,7 +358,7 @@ final class CustomBuildScanEnhancements {
     }
 
     private void addCustomValueWhenProjectPropertyResolvesToTrue(String property) {
-        Utils.projectProperty(mavenSession, property).ifPresent(value -> {
+        projectProperty(mavenSession, property).ifPresent(value -> {
             if (value.isEmpty() || Boolean.valueOf(value).equals(Boolean.TRUE)) {
                 buildScan.value("switches." + property, "On");
             }
