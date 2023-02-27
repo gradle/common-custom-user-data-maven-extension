@@ -104,50 +104,63 @@ final class CustomBuildScanEnhancements {
 
     private void captureCiMetadata() {
         if (isJenkins() || isHudson()) {
-            if (isJenkins() || isHudson()) {
-                Optional<String> buildUrl = envVariable("BUILD_URL");
-                Optional<String> buildNumber = envVariable("BUILD_NUMBER");
-                Optional<String> nodeName = envVariable("NODE_NAME");
-                Optional<String> jobName = envVariable("JOB_NAME");
-                Optional<String> stageName = envVariable("STAGE_NAME");
+            Optional<String> buildUrl = envVariable("BUILD_URL");
+            Optional<String> buildNumber = envVariable("BUILD_NUMBER");
+            Optional<String> nodeName = envVariable("NODE_NAME");
+            Optional<String> jobName = envVariable("JOB_NAME");
+            Optional<String> stageName = envVariable("STAGE_NAME");
 
-                buildUrl.ifPresent(url ->
-                    buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
-                buildNumber.ifPresent(value ->
-                    buildScan.value("CI build number", value));
-                nodeName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI node", value));
-                jobName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI job", value));
-                stageName.ifPresent(value ->
-                    addCustomValueAndSearchLink("CI stage", value));
+            buildUrl.ifPresent(url ->
+                buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
+            buildNumber.ifPresent(value ->
+                buildScan.value("CI build number", value));
+            nodeName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI node", value));
+            jobName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI job", value));
+            stageName.ifPresent(value ->
+                addCustomValueAndSearchLink("CI stage", value));
 
-                jobName.ifPresent(j -> buildNumber.ifPresent(b -> {
-                    Map<String, String> params = new LinkedHashMap<>();
-                    params.put("CI job", j);
-                    params.put("CI build number", b);
-                    addSearchLinkForCustomValues(buildScan, "CI pipeline", params);
-                }));
-            }
+            jobName.ifPresent(j -> buildNumber.ifPresent(b -> {
+                Map<String, String> params = new LinkedHashMap<>();
+                params.put("CI job", j);
+                params.put("CI build number", b);
+                addSearchLinkForCustomValues(buildScan, "CI pipeline", params);
+            }));
         }
 
         if (isTeamCity()) {
-            Optional<String> teamCityConfigFile = projectProperty("teamcity.configuration.properties.file");
-            Optional<String> buildId = projectProperty("teamcity.build.id");
-            if (teamCityConfigFile.isPresent() && buildId.isPresent()) {
-                Properties properties = readPropertiesFile(teamCityConfigFile.get());
-                String teamCityServerUrl = properties.getProperty("teamcity.serverUrl");
-                if (teamCityServerUrl != null) {
-                    String buildUrl = appendIfMissing(teamCityServerUrl, "/") + "viewLog.html?buildId=" + urlEncode(buildId.get());
-                    buildScan.link("TeamCity build", buildUrl);
+            Optional<String> teamcityBuildPropertiesFile = envVariable("TEAMCITY_BUILD_PROPERTIES_FILE");
+            if (teamcityBuildPropertiesFile.isPresent()) {
+                Properties buildProperties = readPropertiesFile(teamcityBuildPropertiesFile.get());
+
+                String teamCityBuildId = buildProperties.getProperty("teamcity.build.id");
+                if(isNotEmpty(teamCityBuildId)) {
+                    String teamcityConfigFile = buildProperties.getProperty("teamcity.configuration.properties.file");
+                    if (isNotEmpty(teamcityConfigFile)) {
+                        Properties configProperties = readPropertiesFile(teamcityConfigFile);
+
+                        String teamCityServerUrl = configProperties.getProperty("teamcity.serverUrl");
+                        if (isNotEmpty(teamCityServerUrl)) {
+                            String buildUrl = appendIfMissing(teamCityServerUrl, "/") + "viewLog.html?buildId=" + urlEncode(teamCityBuildId);
+                            buildScan.link("TeamCity build", buildUrl);
+                        }
+                    }
+                }
+
+                String teamCityBuildNumber = buildProperties.getProperty("build.number");
+                if (isNotEmpty(teamCityBuildNumber)) {
+                    buildScan.value("CI build number", teamCityBuildNumber);
+                }
+                String teamCityBuildTypeId = buildProperties.getProperty("teamcity.buildType.id");
+                if (isNotEmpty(teamCityBuildTypeId)) {
+                    addCustomValueAndSearchLink("CI build config", teamCityBuildTypeId);
+                }
+                String teamCityAgentName = buildProperties.getProperty("agent.name");
+                if (isNotEmpty(teamCityAgentName)) {
+                    addCustomValueAndSearchLink("CI agent", teamCityAgentName);
                 }
             }
-            projectProperty("build.number").ifPresent(value ->
-                buildScan.value("CI build number", value));
-            projectProperty("teamcity.buildType.id").ifPresent(value ->
-                addCustomValueAndSearchLink("CI build config", value));
-            projectProperty("agent.name").ifPresent(value ->
-                addCustomValueAndSearchLink("CI agent", value));
         }
 
         if (isCircleCI()) {
