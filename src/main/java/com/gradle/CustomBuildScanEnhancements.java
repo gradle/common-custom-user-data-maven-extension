@@ -31,6 +31,7 @@ import static com.gradle.Utils.envVariable;
 import static com.gradle.Utils.execAndCheckSuccess;
 import static com.gradle.Utils.execAndGetStdOut;
 import static com.gradle.Utils.isNotEmpty;
+import static com.gradle.Utils.projectProperty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
 import static com.gradle.Utils.sysProperty;
@@ -317,17 +318,17 @@ final class CustomBuildScanEnhancements {
 
         private String getGitBranchName(Supplier<String> gitCommand) {
             if (isJenkins() || isHudson()) {
-                Optional<String> branch = Utils.envVariable("BRANCH_NAME");
+                Optional<String> branch = envVariable("BRANCH_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
             } else if (isGitLab()) {
-                Optional<String> branch = Utils.envVariable("CI_COMMIT_REF_NAME");
+                Optional<String> branch = envVariable("CI_COMMIT_REF_NAME");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
             } else if (isAzurePipelines()){
-                Optional<String> branch = Utils.envVariable("BUILD_SOURCEBRANCH");
+                Optional<String> branch = envVariable("BUILD_SOURCEBRANCH");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
