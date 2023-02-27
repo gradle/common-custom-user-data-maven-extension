@@ -14,6 +14,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static com.gradle.CiUtils.isAzurePipelines;
+import static com.gradle.CiUtils.isBamboo;
+import static com.gradle.CiUtils.isBitrise;
+import static com.gradle.CiUtils.isCi;
+import static com.gradle.CiUtils.isCircleCI;
+import static com.gradle.CiUtils.isGitHubActions;
+import static com.gradle.CiUtils.isGitLab;
+import static com.gradle.CiUtils.isGoCD;
+import static com.gradle.CiUtils.isHudson;
+import static com.gradle.CiUtils.isJenkins;
+import static com.gradle.CiUtils.isTeamCity;
+import static com.gradle.CiUtils.isTravis;
 import static com.gradle.Utils.appendIfMissing;
 import static com.gradle.Utils.envVariable;
 import static com.gradle.Utils.execAndCheckSuccess;
@@ -244,58 +256,6 @@ final class CustomBuildScanEnhancements {
 
     }
 
-    private boolean isCi() {
-        return isGenericCI() || isJenkins() || isHudson() || isTeamCity() || isCircleCI() || isBamboo() || isGitHubActions() || isGitLab() || isTravis() || isBitrise() || isGoCD() || isAzurePipelines();
-    }
-
-    private boolean isGenericCI() {
-        return envVariable("CI").isPresent() || sysProperty("CI").isPresent();
-    }
-
-    private boolean isJenkins() {
-        return envVariable("JENKINS_URL").isPresent();
-    }
-
-    private boolean isHudson() {
-        return envVariable("HUDSON_URL").isPresent();
-    }
-
-    private boolean isTeamCity() {
-        return envVariable("TEAMCITY_VERSION").isPresent();
-    }
-
-    private boolean isCircleCI() {
-        return envVariable("CIRCLE_BUILD_URL").isPresent();
-    }
-
-    private boolean isBamboo() {
-        return envVariable("bamboo_resultsUrl").isPresent();
-    }
-
-    private boolean isGitHubActions() {
-        return envVariable("GITHUB_ACTIONS").isPresent();
-    }
-
-    private boolean isGitLab() {
-        return envVariable("GITLAB_CI").isPresent();
-    }
-
-    private boolean isTravis() {
-        return envVariable("TRAVIS_JOB_ID").isPresent();
-    }
-
-    private boolean isBitrise() {
-        return envVariable("BITRISE_BUILD_URL").isPresent();
-    }
-
-    private boolean isGoCD() {
-        return envVariable("GO_SERVER_URL").isPresent();
-    }
-
-    private boolean isAzurePipelines() {
-        return envVariable("TF_BUILD").isPresent();
-    }
-
     private void captureGitMetadata() {
         buildScan.background(new CaptureGitMetadataAction());
     }
@@ -373,22 +333,6 @@ final class CustomBuildScanEnhancements {
                 }
             }
             return gitCommand.get();
-        }
-
-        private boolean isJenkins() {
-            return Utils.envVariable("JENKINS_URL").isPresent();
-        }
-
-        private boolean isHudson() {
-            return Utils.envVariable("HUDSON_URL").isPresent();
-        }
-
-        private boolean isGitLab() {
-            return Utils.envVariable("GITLAB_CI").isPresent();
-        }
-
-        private boolean isAzurePipelines() {
-            return Utils.envVariable("TF_BUILD").isPresent();
         }
 
     }
