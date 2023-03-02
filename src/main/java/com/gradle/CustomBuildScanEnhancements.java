@@ -239,8 +239,8 @@ final class CustomBuildScanEnhancements {
                         buildScan.link("GitLab build", url));
                 envVariable("CI_PIPELINE_URL").ifPresent(url ->
                         buildScan.link("GitLab pipeline", url));
-                envVariable("CI_JOB_NAME").ifPresent(value1 ->
-                        addCustomValueAndSearchLink(buildScan, "CI job", value1));
+                envVariable("CI_JOB_NAME").ifPresent(value ->
+                        addCustomValueAndSearchLink(buildScan, "CI job", value));
                 envVariable("CI_JOB_STAGE").ifPresent(value ->
                         addCustomValueAndSearchLink(buildScan, "CI stage", value));
             }
@@ -306,6 +306,7 @@ final class CustomBuildScanEnhancements {
     }
 
     private void captureGitMetadata() {
+        // Run expensive computation in background
         buildScan.background(new CaptureGitMetadataAction());
     }
 
