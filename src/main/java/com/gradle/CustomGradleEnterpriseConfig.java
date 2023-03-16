@@ -44,7 +44,6 @@ final class CustomGradleEnterpriseConfig {
 
         // Only permit store operations to the remote build cache for CI builds
         // Local builds will only read from the remote build cache
-        buildCache.getRemote().getServer().setUrl(URI.create("https://enterprise-samples.gradle.com/cache/"));
         buildCache.getRemote().setEnabled(true);
         buildCache.getRemote().setStoreEnabled(isCiServer);
 
