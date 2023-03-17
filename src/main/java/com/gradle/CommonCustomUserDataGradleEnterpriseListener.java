@@ -40,7 +40,6 @@ public final class CommonCustomUserDataGradleEnterpriseListener implements Gradl
         logger.debug("Finished configuring build cache");
 
         GroovyScriptUserData.evaluate(session, api, logger);
-        SystemPropertyOverrides.configureBuildCache(buildCache);
     }
 
 }

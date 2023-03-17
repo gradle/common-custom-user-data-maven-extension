@@ -46,21 +46,8 @@ final class Utils {
         return value != null && !value.isEmpty();
     }
 
-    static String stripPrefix(String prefix, String string) {
-        return string.startsWith(prefix) ? string.substring(prefix.length()) : string;
-    }
-
     static String appendIfMissing(String str, String suffix) {
         return str.endsWith(suffix) ? str : str + suffix;
-    }
-
-    static URI appendPathAndTrailingSlash(URI baseUri, String path) {
-        if (isNotEmpty(path)) {
-            String normalizedBasePath = appendIfMissing(baseUri.getPath(), "/");
-            String normalizedPath = appendIfMissing(stripPrefix("/", path), "/");
-            return baseUri.resolve(normalizedBasePath).resolve(normalizedPath);
-        }
-        return baseUri;
     }
 
     static String urlEncode(String str) {
