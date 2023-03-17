@@ -27,7 +27,7 @@ final class CustomGradleEnterpriseConfig {
         boolean isCiServer = System.getenv().containsKey("CI");
 
         buildScans.publishAlways();
-        buildScans.setCaptureGoalInputFiles(true);
+        buildScans.capture(capture -> capture.setGoalInputFiles(true));
         buildScans.setUploadInBackground(!isCiServer);
 
         */
@@ -44,7 +44,6 @@ final class CustomGradleEnterpriseConfig {
 
         // Only permit store operations to the remote build cache for CI builds
         // Local builds will only read from the remote build cache
-        buildCache.getRemote().getServer().setUrl(URI.create("https://enterprise-samples.gradle.com/cache/"));
         buildCache.getRemote().setEnabled(true);
         buildCache.getRemote().setStoreEnabled(isCiServer);
 
