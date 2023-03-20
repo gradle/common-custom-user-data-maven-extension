@@ -1,11 +1,11 @@
 package com.gradle;
 
-final class CiUtils {
+public final class CiUtils {
 
     private CiUtils() {
     }
 
-    static boolean isCi() {
+    public static boolean isCi() {
         return isGenericCI()
                 || isJenkins()
                 || isHudson()
