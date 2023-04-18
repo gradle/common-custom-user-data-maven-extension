@@ -3,6 +3,8 @@ package com.gradle;
 import com.gradle.maven.extension.api.scan.BuildScanApi;
 import org.apache.maven.execution.MavenSession;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -223,10 +225,11 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isGitHubActions()) {
-                Optional<String> gitHubRepository = envVariable("GITHUB_REPOSITORY");
+                Optional<String> gitHubUrl = envVariable("GITHUB_SERVER_URL");
+                Optional<String> gitRepository = envVariable("GITHUB_REPOSITORY");
                 Optional<String> gitHubRunId = envVariable("GITHUB_RUN_ID");
-                if (gitHubRepository.isPresent() && gitHubRunId.isPresent()) {
-                    buildScan.link("GitHub Actions build", "https://github.com/" + gitHubRepository.get() + "/actions/runs/" + gitHubRunId.get());
+                if (gitHubUrl.isPresent() && gitRepository.isPresent() && gitHubRunId.isPresent()) {
+                    buildScan.link("GitHub Actions build", gitHubUrl.get() + "/" + gitRepository.get() + "/actions/runs/" + gitHubRunId.get());
                 }
                 envVariable("GITHUB_WORKFLOW").ifPresent(value ->
                         addCustomValueAndSearchLink(buildScan, "CI workflow", value));
@@ -312,6 +315,8 @@ final class CustomBuildScanEnhancements {
 
     private static final class CaptureGitMetadataAction implements Consumer<BuildScanApi> {
 
+        private static final Pattern GIT_REPO_URI_PATTERN = Pattern.compile("^(?:https://|(?:ssh)?.*?@)(.*?(?:github|gitlab).*?)(?:/|:[0-9]*?/|:)(.*?)(?:\\.git)?$");
+
         @Override
         public void accept(BuildScanApi buildScan) {
             if (!isGitInstalled()) {
@@ -342,22 +347,19 @@ final class CustomBuildScanEnhancements {
                 buildScan.value("Git status", gitStatus);
             }
 
-            if (isNotEmpty(gitRepo) && isNotEmpty(gitCommitId)) {
-                if (gitRepo.contains("github.com/") || gitRepo.contains("github.com:")) {
-                    Matcher matcher = Pattern.compile("(.*)github\\.com[/|:](.*)").matcher(gitRepo);
-                    if (matcher.matches()) {
-                        String rawRepoPath = matcher.group(2);
-                        String repoPath = rawRepoPath.endsWith(".git") ? rawRepoPath.substring(0, rawRepoPath.length() - 4) : rawRepoPath;
-                        buildScan.link("Github source", "https://github.com/" + repoPath + "/tree/" + gitCommitId);
+            Optional<String> gitHubUrl = envVariable("GITHUB_SERVER_URL");
+            Optional<String> gitRepository = envVariable("GITHUB_REPOSITORY");
+            if (gitHubUrl.isPresent() && gitRepository.isPresent() && isNotEmpty(gitCommitId)) {
+                buildScan.link("GitHub source", gitHubUrl.get() + "/" + gitRepository.get() + "/tree/" + gitCommitId);
+            } else if (isNotEmpty(gitRepo) && isNotEmpty(gitCommitId)) {
+                Optional<URI> webRepoUri = toWebRepoUri(gitRepo);
+                webRepoUri.ifPresent(uri -> {
+                    if (uri.getHost().contains("github")) {
+                        buildScan.link("GitHub source", uri + "/tree/" + gitCommitId);
+                    } else if (uri.getHost().contains("gitlab")) {
+                        buildScan.link("GitLab source", uri + "/-/commit/" + gitCommitId);
                     }
-                } else if (gitRepo.contains("gitlab.com/") || gitRepo.contains("gitlab.com:")) {
-                    Matcher matcher = Pattern.compile("(.*)gitlab\\.com[/|:](.*)").matcher(gitRepo);
-                    if (matcher.matches()) {
-                        String rawRepoPath = matcher.group(2);
-                        String repoPath = rawRepoPath.endsWith(".git") ? rawRepoPath.substring(0, rawRepoPath.length() - 4) : rawRepoPath;
-                        buildScan.link("GitLab Source", "https://gitlab.com/" + repoPath + "/-/commit/" + gitCommitId);
-                    }
-                }
+                });
             }
         }
 
@@ -385,6 +387,25 @@ final class CustomBuildScanEnhancements {
             return gitCommand.get();
         }
 
+        private Optional<URI> toWebRepoUri(String gitRepoUri) {
+            Matcher matcher = GIT_REPO_URI_PATTERN.matcher(gitRepoUri);
+            if (matcher.matches()) {
+                String scheme = "https";
+                String host = matcher.group(1);
+                String path = matcher.group(2).startsWith("/") ? matcher.group(2) : "/" + matcher.group(2);
+                return toUri(scheme, host, path);
+            } else {
+                return Optional.empty();
+            }
+        }
+
+        private Optional<URI> toUri(String scheme, String host, String path) {
+            try {
+                return Optional.of(new URI(scheme, host, path, null));
+            } catch (URISyntaxException e) {
+                return Optional.empty();
+            }
+        }
     }
 
     private void captureSkipTestsFlags() {
