@@ -15,6 +15,6 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
       - name: Build with Maven
-        run: ./mvnw clean verify -B
+        run: ./mvnw clean verify -B -Dmaven.build.cache.remote.save.enabled=true
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_SOLUTIONS_ACCESS_TOKEN }}
