@@ -18,8 +18,7 @@ jobs:
           server-username: GRADLE_ENTERPRISE_REMOTE_CACHE_USER
           server-password: GRADLE_ENTERPRISE_ACCESS_KEY
       - name: Build with Maven
-        run: ./mvnw clean verify -B
+        run: ./mvnw clean verify -B -Daether.connector.http.preemptiveAuth=true
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_SOLUTIONS_ACCESS_TOKEN }}
           GRADLE_ENTERPRISE_REMOTE_CACHE_USER: '' # Required to be empty when using access token to authenticate
-
