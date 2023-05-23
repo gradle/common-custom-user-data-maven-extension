@@ -288,7 +288,7 @@ final class CustomBuildScanEnhancements {
 
             if (isBuildkite()) {
                 envVariable("BUILDKITE_BUILD_URL").ifPresent(url ->
-                    buildScan.link("CI build", url));
+                    buildScan.link("Buildkite build", url));
                 envVariable("BUILDKITE_COMMAND").ifPresent(command ->
                     addCustomValueAndSearchLink(buildScan, "CI command", command));
                 envVariable("BUILDKITE_BUILD_ID").ifPresent(id ->
