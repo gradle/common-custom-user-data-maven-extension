@@ -96,7 +96,7 @@ final class CustomBuildScanEnhancements {
         private void execute() {
             if (props.get(SYSTEM_PROP_IDEA_VENDOR_NAME).isPresent()) {
                 String ideaVendorNameValue = props.get(SYSTEM_PROP_IDEA_VENDOR_NAME).get();
-                if (ideaVendorNameValue.equals("JetBrains")) {
+                if ("JetBrains".equals(ideaVendorNameValue)) {
                     tagIde("IntelliJ IDEA", props.get(SYSTEM_PROP_IDEA_VERSION).orElse(""));
                 }
             } else if (props.get(SYSTEM_PROP_IDEA_VERSION).isPresent()) {
