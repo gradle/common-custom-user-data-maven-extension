@@ -7,23 +7,23 @@ final class CiUtils {
 
     static boolean isCi() {
         return isGenericCI()
-            || isJenkins()
-            || isHudson()
-            || isTeamCity()
-            || isCircleCI()
-            || isBamboo()
-            || isGitHubActions()
-            || isGitLab()
-            || isTravis()
-            || isBitrise()
-            || isGoCD()
-            || isAzurePipelines()
-            || isBuildkite();
+                || isJenkins()
+                || isHudson()
+                || isTeamCity()
+                || isCircleCI()
+                || isBamboo()
+                || isGitHubActions()
+                || isGitLab()
+                || isTravis()
+                || isBitrise()
+                || isGoCD()
+                || isAzurePipelines()
+                || isBuildkite();
     }
 
     static boolean isGenericCI() {
         return Utils.envVariable("CI").isPresent()
-            || Utils.sysProperty("CI").isPresent();
+                || Utils.sysProperty("CI").isPresent();
     }
 
     static boolean isJenkins() {
