@@ -318,7 +318,7 @@ final class CustomBuildScanEnhancements {
 
                 Optional<String> buildkitePrRepo = envVariable("BUILDKITE_PULL_REQUEST_REPO");
                 Optional<String> buildkitePrNumber = envVariable("BUILDKITE_PULL_REQUEST");
-                if (Stream.of(buildkitePrRepo, buildkitePrNumber).allMatch(Optional::isPresent)) {
+                if (buildkitePrRepo.isPresent() && buildkitePrNumber.isPresent()) {
                     // Create a GitHub link with the pr number and full repo url
                     String prNumber = buildkitePrNumber.get();
                     toWebRepoUri(buildkitePrRepo.get()).ifPresent(url ->
