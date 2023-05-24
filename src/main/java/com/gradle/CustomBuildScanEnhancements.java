@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 import static com.gradle.CiUtils.isAzurePipelines;
 import static com.gradle.CiUtils.isBamboo;
 import static com.gradle.CiUtils.isBitrise;
+import static com.gradle.CiUtils.isBuildkite;
 import static com.gradle.CiUtils.isCi;
 import static com.gradle.CiUtils.isCircleCI;
 import static com.gradle.CiUtils.isGitHubActions;
@@ -38,6 +39,7 @@ import static com.gradle.Utils.projectProperty;
 import static com.gradle.Utils.readPropertiesFile;
 import static com.gradle.Utils.redactUserInfo;
 import static com.gradle.Utils.sysProperty;
+import static com.gradle.Utils.toWebRepoUri;
 import static com.gradle.Utils.urlEncode;
 
 /**
@@ -305,6 +307,24 @@ final class CustomBuildScanEnhancements {
                 buildId.ifPresent(value ->
                         buildScan.value("CI build number", value));
             }
+
+            if (isBuildkite()) {
+                envVariable("BUILDKITE_BUILD_URL").ifPresent(url ->
+                        buildScan.link("Buildkite build", url));
+                envVariable("BUILDKITE_COMMAND").ifPresent(command ->
+                        addCustomValueAndSearchLink(buildScan, "CI command", command));
+                envVariable("BUILDKITE_BUILD_ID").ifPresent(id ->
+                        buildScan.value("CI build ID", id));
+
+                Optional<String> buildkitePrRepo = envVariable("BUILDKITE_PULL_REQUEST_REPO");
+                Optional<String> buildkitePrNumber = envVariable("BUILDKITE_PULL_REQUEST");
+                if (buildkitePrRepo.isPresent() && buildkitePrNumber.isPresent()) {
+                    // Create a GitHub link with the pr number and full repo url
+                    String prNumber = buildkitePrNumber.get();
+                    toWebRepoUri(buildkitePrRepo.get()).ifPresent(url ->
+                            buildScan.link("PR source", url + "/pull/" + prNumber));
+                }
+            }
         }
     }
 
@@ -314,8 +334,6 @@ final class CustomBuildScanEnhancements {
     }
 
     private static final class CaptureGitMetadataAction implements Consumer<BuildScanApi> {
-
-        private static final Pattern GIT_REPO_URI_PATTERN = Pattern.compile("^(?:https://|(?:ssh)?.*?@)(.*?(?:github|gitlab).*?)(?:/|:[0-9]*?/|:)(.*?)(?:\\.git)?$");
 
         @Override
         public void accept(BuildScanApi buildScan) {
@@ -378,33 +396,13 @@ final class CustomBuildScanEnhancements {
                 if (branch.isPresent()) {
                     return branch.get();
                 }
-            } else if (isAzurePipelines()){
+            } else if (isAzurePipelines()) {
                 Optional<String> branch = envVariable("BUILD_SOURCEBRANCH");
                 if (branch.isPresent()) {
                     return branch.get();
                 }
             }
             return gitCommand.get();
-        }
-
-        private Optional<URI> toWebRepoUri(String gitRepoUri) {
-            Matcher matcher = GIT_REPO_URI_PATTERN.matcher(gitRepoUri);
-            if (matcher.matches()) {
-                String scheme = "https";
-                String host = matcher.group(1);
-                String path = matcher.group(2).startsWith("/") ? matcher.group(2) : "/" + matcher.group(2);
-                return toUri(scheme, host, path);
-            } else {
-                return Optional.empty();
-            }
-        }
-
-        private Optional<URI> toUri(String scheme, String host, String path) {
-            try {
-                return Optional.of(new URI(scheme, host, path, null));
-            } catch (URISyntaxException e) {
-                return Optional.empty();
-            }
         }
     }
 

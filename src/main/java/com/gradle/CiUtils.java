@@ -17,7 +17,8 @@ final class CiUtils {
                 || isTravis()
                 || isBitrise()
                 || isGoCD()
-                || isAzurePipelines();
+                || isAzurePipelines()
+                || isBuildkite();
     }
 
     static boolean isGenericCI() {
@@ -67,6 +68,10 @@ final class CiUtils {
 
     static boolean isAzurePipelines() {
         return Utils.envVariable("TF_BUILD").isPresent();
+    }
+
+    static boolean isBuildkite() {
+        return Utils.envVariable("BUILDKITE").isPresent();
     }
 
 }
