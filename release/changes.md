@@ -1,1 +1,1 @@
-
+- [FIX] Project properties not collected as custom values from Maven 4.0.0-alpha-06 ([related issue](https://issues.apache.org/jira/browse/MNG-7829))
