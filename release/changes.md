@@ -1,1 +1,1 @@
-- [FIX] Generates incorrect links to source repositories when repository URL contains embedded user info
+- [FIX] PGP key to sign the artifacts needs to be rotated
