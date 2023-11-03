@@ -11,7 +11,7 @@
 
 [![Verify Build](https://github.com/gradle/common-custom-user-data-maven-extension/actions/workflows/build-verification.yml/badge.svg?branch=main)](https://github.com/gradle/common-custom-user-data-maven-extension/actions/workflows/build-verification.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.gradle/common-custom-user-data-maven-extension)](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension)
-[![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.solutions-team.gradle.com/scans)
+[![Revved up by Develocity](https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.solutions-team.gradle.com/scans)
 
 The Common Custom User Data Maven extension for Gradle Enterprise enhances published build scans
 by adding a set of tags, links and custom values that have proven to be useful for many projects building with Gradle Enterprise.
