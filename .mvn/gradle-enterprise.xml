@@ -23,7 +23,7 @@
       <enabled>true</enabled>
     </local>
     <remote>
-      <storeEnabled>#{isTrue(env['GITHUB_ACTIONS'])}</storeEnabled>
+      <storeEnabled>#{isTrue(env['GITHUB_ACTIONS']) and isTrue(env['GRADLE_ENTERPRISE_ACCESS_KEY'])}</storeEnabled>
     </remote>
   </buildCache>
 </gradleEnterprise>
