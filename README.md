@@ -1,8 +1,8 @@
-> _This repository is maintained by the Gradle Enterprise Solutions team, as one of several publicly available repositories:_
-> - _[Gradle Enterprise Build Configuration Samples][ge-build-config-samples]_
-> - _[Gradle Enterprise Build Optimization Experiments][ge-build-optimization-experiments]_
-> - _[Gradle Enterprise Build Validation Scripts][ge-build-validation-scripts]_
-> - _[Gradle Enterprise Open Source Projects][ge-oss-projects]_
+> _This repository is maintained by the Develocity Solutions team, as one of several publicly available repositories:_
+> - _[Develocity Build Configuration Samples][develocity-build-config-samples]_
+> - _[Develocity Build Optimization Experiments][develocity-build-optimization-experiments]_
+> - _[Develocity Build Validation Scripts][develocity-build-validation-scripts]_
+> - _[Develocity Open Source Projects][develocity-oss-projects]_
 > - _[Common Custom User Data Maven Extension][ccud-maven-extension] (this repository)_
 > - _[Common Custom User Data Gradle Plugin][ccud-gradle-plugin]_
 > - _[Android Cache Fix Gradle Plugin][android-cache-fix-plugin]_
@@ -11,31 +11,31 @@
 
 [![Verify Build](https://github.com/gradle/common-custom-user-data-maven-extension/actions/workflows/build-verification.yml/badge.svg?branch=main)](https://github.com/gradle/common-custom-user-data-maven-extension/actions/workflows/build-verification.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.gradle/common-custom-user-data-maven-extension)](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension)
-[![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.solutions-team.gradle.com/scans)
+[![Revved up by Develocity](https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.solutions-team.gradle.com/scans)
 
-The Common Custom User Data Maven extension for Gradle Enterprise enhances published build scans
-by adding a set of tags, links and custom values that have proven to be useful for many projects building with Gradle Enterprise.
+The Common Custom User Data Maven extension for Develocity enhances published build scans
+by adding a set of tags, links and custom values that have proven to be useful for many projects building with Develocity.
 
 You can leverage this extension for your project in one of two ways:
 1. [Apply the published extension](#applying-the-published-extension) directly in your `.mvn/extensions.xml` and immediately benefit from enhanced build scans
-2. Copy this repository and [develop a customized version of the extension](#developing-a-customized-version-of-the-extension) to standardize Gradle Enterprise usage across multiple projects
+2. Copy this repository and [develop a customized version of the extension](#developing-a-customized-version-of-the-extension) to standardize Develocity usage across multiple projects
 
 ## Applying the published extension
 
 The Common Custom User Data Maven extension is available in [Maven Central](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension). This extension
-requires the [Gradle Enterprise Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have
+requires the [Develocity Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have
 an effect.
 
 In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
-is the same file where you have already declared the Gradle Enterprise Maven extension.
+is the same file where you have already declared the Develocity Maven extension.
 
 See [here](.mvn/extensions.xml) for an example.
 
 ### Version compatibility
 
-This table details the version compatibility of the Common Custom User Data Maven extension with the Gradle Enterprise Maven extension.
+This table details the version compatibility of the Common Custom User Data Maven extension with the Develocity Maven extension.
 
-| Common Custom User Data Maven extension versions | Gradle Enterprise Maven extension versions |
+| Common Custom User Data Maven extension versions | Develocity Maven extension versions        |
 | ------------------------------------------------ | ------------------------------------------ |
 | `1.8+`                                           | `1.11+`                                    |
 | `1.7` - `1.7.3`                                  | `1.10.1+`                                  |
@@ -61,7 +61,7 @@ Groovy script. This is a good intermediate step before creating your own extensi
 The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
-- `gradleEnterprise` (type: [GradleEnterpriseApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/GradleEnterpriseApi.html)): _configure Gradle Enterprise_
+- `gradleEnterprise` (type: [GradleEnterpriseApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/GradleEnterpriseApi.html)): _configure Develocity_
 - `buildScan` (type: [BuildScanApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/scan/BuildScanApi.html)): _configure build scan publishing and enhance build scans_
 - `buildCache` (type: [BuildCacheApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/cache/BuildCacheApi.html)): _configure build cache_
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
@@ -76,9 +76,9 @@ For more flexibility, we recommend creating a copy of this repository so that yo
 
 This approach has a number of benefits:
 - Tailor the build scan enhancements to exactly the set of tags, links and custom values you require
-- Standardize the configuration for connecting to Gradle Enterprise and the remote build cache in your organization, removing the need for each project to specify this configuration
+- Standardize the configuration for connecting to Develocity and the remote build cache in your organization, removing the need for each project to specify this configuration
 
-If your customized extension provides all required Gradle Enterprise configuration, then a consumer project will get all the benefits of Gradle Enterprise simply by applying the extension. The
+If your customized extension provides all required Develocity configuration, then a consumer project will get all the benefits of Develocity simply by applying the extension. The
 project sources provide a good template to get started with your own extension.
 
 Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) for more details on the key types available for use.
@@ -89,18 +89,18 @@ Refer to the [release history](https://github.com/gradle/common-custom-user-data
 
 ## Learn more
 
-Visit our website to learn more about [Gradle Enterprise][gradle-enterprise].
+Visit our website to learn more about [Develocity][develocity].
 
 ## License
 
-The Gradle Enterprise Common Custom User Data Maven extension is open-source software released under the [Apache 2.0 License][apache-license].
+The Develocity Common Custom User Data Maven extension is open-source software released under the [Apache 2.0 License][apache-license].
 
-[ge-build-config-samples]: https://github.com/gradle/gradle-enterprise-build-config-samples
-[ge-build-optimization-experiments]: https://github.com/gradle/gradle-enterprise-build-optimization-experiments
-[ge-build-validation-scripts]: https://github.com/gradle/gradle-enterprise-build-validation-scripts
-[ge-oss-projects]: https://github.com/gradle/gradle-enterprise-oss-projects
+[develocity-build-config-samples]: https://github.com/gradle/gradle-enterprise-build-config-samples
+[develocity-build-optimization-experiments]: https://github.com/gradle/gradle-enterprise-build-optimization-experiments
+[develocity-build-validation-scripts]: https://github.com/gradle/gradle-enterprise-build-validation-scripts
+[develocity-oss-projects]: https://github.com/gradle/gradle-enterprise-oss-projects
 [ccud-gradle-plugin]: https://github.com/gradle/common-custom-user-data-gradle-plugin
 [ccud-maven-extension]: https://github.com/gradle/common-custom-user-data-maven-extension
 [android-cache-fix-plugin]: https://github.com/gradle/android-cache-fix-gradle-plugin
-[gradle-enterprise]: https://gradle.com/enterprise
+[develocity]: https://gradle.com/develocity
 [apache-license]: https://www.apache.org/licenses/LICENSE-2.0.html
