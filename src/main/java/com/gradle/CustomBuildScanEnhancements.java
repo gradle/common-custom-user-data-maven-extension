@@ -406,6 +406,11 @@ final class CustomBuildScanEnhancements {
                 if (branch.isPresent()) {
                     return branch.get();
                 }
+            } else if (isGitHubActions()) {
+                Optional<String> branch = envVariable("GITHUB_REF_NAME";
+                if (branch.isPresent()) {
+                    return branch.get();
+                }
             }
             return gitCommand.get();
         }
