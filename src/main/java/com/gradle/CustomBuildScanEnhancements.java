@@ -242,6 +242,8 @@ final class CustomBuildScanEnhancements {
                         addCustomValueAndSearchLink(buildScan, "CI workflow", value));
                 envVariable("GITHUB_RUN_ID").ifPresent(value ->
                         addCustomValueAndSearchLink(buildScan, "CI run", value));
+                envVariable("GITHUB_HEAD_REF").ifPresent(value ->
+                        buildScan.value("PR branch", value));
             }
 
             if (isGitLab()) {
