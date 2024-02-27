@@ -22,21 +22,21 @@ public final class CommonCustomUserDataGradleEnterpriseListener implements Gradl
     @Override
     public void configure(GradleEnterpriseApi api, MavenSession session) throws Exception {
         logger.debug("Executing extension: " + getClass().getSimpleName());
-        CustomGradleEnterpriseConfig customGradleEnterpriseConfig = new CustomGradleEnterpriseConfig();
+        CustomDevelocityConfig customDevelocityConfig = new CustomDevelocityConfig();
 
         logger.debug("Configuring Gradle Enterprise");
-        customGradleEnterpriseConfig.configureGradleEnterprise(api);
+        customDevelocityConfig.configureGradleEnterprise(api);
         logger.debug("Finished configuring Gradle Enterprise");
 
         logger.debug("Configuring build scan publishing and applying build scan enhancements");
         BuildScanApi buildScan = api.getBuildScan();
-        customGradleEnterpriseConfig.configureBuildScanPublishing(buildScan);
+        customDevelocityConfig.configureBuildScanPublishing(buildScan);
         new CustomBuildScanEnhancements(buildScan, session).apply();
         logger.debug("Finished configuring build scan publishing and applying build scan enhancements");
 
         logger.debug("Configuring build cache");
         BuildCacheApi buildCache = api.getBuildCache();
-        customGradleEnterpriseConfig.configureBuildCache(buildCache);
+        customDevelocityConfig.configureBuildCache(buildCache);
         logger.debug("Finished configuring build cache");
 
         GroovyScriptUserData.evaluate(session, api, logger);

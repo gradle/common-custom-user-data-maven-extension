@@ -4,16 +4,14 @@ import com.gradle.maven.extension.api.GradleEnterpriseApi;
 import com.gradle.maven.extension.api.cache.BuildCacheApi;
 import com.gradle.maven.extension.api.scan.BuildScanApi;
 
-import java.net.URI;
-
 /**
- * Provide standardized Gradle Enterprise configuration.
+ * Provide standardized Develocity configuration.
  * By applying the extension, these settings will automatically be applied.
  */
-final class CustomGradleEnterpriseConfig {
+final class CustomDevelocityConfig {
 
     void configureGradleEnterprise(GradleEnterpriseApi gradleEnterprise) {
-        /* Example of Gradle Enterprise configuration
+        /* Example of Develocity configuration
 
         gradleEnterprise.setServer("https://enterprise-samples.gradle.com");
         gradleEnterprise.setAllowUntrustedServer(false);

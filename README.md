@@ -22,7 +22,7 @@ You can leverage this extension for your project in one of two ways:
 ## Applying the published extension
 
 The Common Custom User Data Maven extension is available in [Maven Central](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension). This extension
-requires the [Develocity Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have
+requires the [Develocity Maven extension](https://search.maven.org/artifact/com.gradle/develocity-maven-extension) to also be applied in your build in order to have
 an effect.
 
 In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
@@ -57,7 +57,7 @@ captured and under which conditions.
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default. The additional configuration happens in a specific
 Groovy script. This is a good intermediate step before creating your own extension.
 
-The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
+The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` or `.mvn/develocity-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
 - `gradleEnterprise` (type: [GradleEnterpriseApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/GradleEnterpriseApi.html)): _configure Develocity_

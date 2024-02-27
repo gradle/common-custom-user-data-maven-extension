@@ -6,8 +6,8 @@
     <version>1.13.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Gradle Enterprise Common Custom User Data Maven Extension</name>
-    <description>A Maven extension to capture common custom user data used for Maven Build Scans in Gradle Enterprise</description>
+    <name>Develocity Common Custom User Data Maven Extension</name>
+    <description>A Maven extension to capture common custom user data used for Maven Build Scans in Develocity</description>
     <url>https://github.com/gradle/common-custom-user-data-maven-extension</url>
 
     <properties>
