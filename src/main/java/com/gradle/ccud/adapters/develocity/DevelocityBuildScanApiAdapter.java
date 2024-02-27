@@ -4,8 +4,10 @@ import com.gradle.ccud.adapters.BuildResultAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
 import com.gradle.ccud.adapters.BuildScanCaptureAdapter;
 import com.gradle.ccud.adapters.BuildScanDataObfuscationAdapter;
+import com.gradle.ccud.adapters.PropertyConfigurator;
 import com.gradle.ccud.adapters.PublishedBuildScanAdapter;
 import com.gradle.ccud.adapters.shared.DefaultBuildResultAdapter;
+import com.gradle.ccud.adapters.shared.DefaultBuildScanCaptureAdapter;
 import com.gradle.ccud.adapters.shared.DefaultBuildScanDataObfuscationAdapter;
 import com.gradle.ccud.adapters.shared.DefaultPublishedBuildScanAdapter;
 import com.gradle.develocity.agent.maven.api.scan.BuildScanApi;
@@ -17,6 +19,7 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
 
     private final BuildScanApi buildScan;
     private final BuildScanDataObfuscationAdapter obfuscation;
+    private final BuildScanCaptureAdapter capture;
 
     DevelocityBuildScanApiAdapter(BuildScanApi buildScan) {
         this.buildScan = buildScan;
@@ -24,6 +27,11 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
             buildScan.getObfuscation()::username,
             buildScan.getObfuscation()::hostname,
             buildScan.getObfuscation()::ipAddresses
+        );
+        this.capture = new DefaultBuildScanCaptureAdapter(
+            new PropertyConfigurator<>(buildScan.getCapture()::setFileFingerprints, buildScan.getCapture()::isFileFingerprints),
+            new PropertyConfigurator<>(buildScan.getCapture()::setBuildLogging, buildScan.getCapture()::isBuildLogging),
+            new PropertyConfigurator<>(buildScan.getCapture()::setTestLogging, buildScan.getCapture()::isTestLogging)
         );
     }
 
@@ -144,11 +152,7 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
 
     @Override
     public BuildScanCaptureAdapter getCapture() {
-        return null;
+        return capture;
     }
 
-    @Override
-    public void capture(Consumer<? super BuildScanCaptureAdapter> action) {
-
-    }
 }

@@ -12,10 +12,12 @@ public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
 
     private final GradleEnterpriseApi api;
     private final BuildScanApiAdapter buildScan;
+    private final BuildCacheApiAdapter buildCache;
 
     public GradleEnterpriseApiAdapter(GradleEnterpriseApi api) {
         this.api = api;
         this.buildScan = new GradleEnterpriseBuildScanApiAdapter(api.getBuildScan());
+        this.buildCache = new GradleEnterpriseBuildCacheApiAdapter(api.getBuildCache());
     }
 
     @Override
@@ -85,7 +87,6 @@ public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
 
     @Override
     public BuildCacheApiAdapter getBuildCache() {
-        // TODO pshevche
-        return null;
+        return buildCache;
     }
 }

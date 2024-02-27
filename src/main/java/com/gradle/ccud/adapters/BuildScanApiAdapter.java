@@ -61,6 +61,8 @@ public interface BuildScanApiAdapter {
 
     BuildScanCaptureAdapter getCapture();
 
-    void capture(Consumer<? super BuildScanCaptureAdapter> action);
+    default void capture(Consumer<? super BuildScanCaptureAdapter> action) {
+        action.accept(getCapture());
+    }
 
 }

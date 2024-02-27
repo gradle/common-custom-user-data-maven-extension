@@ -12,10 +12,12 @@ public class DevelocityApiAdapter implements DevelocityAdapter {
 
     private final DevelocityApi api;
     private final BuildScanApiAdapter buildScan;
+    private final BuildCacheApiAdapter buildCache;
 
     public DevelocityApiAdapter(DevelocityApi api) {
         this.api = api;
         this.buildScan = new DevelocityBuildScanApiAdapter(api.getBuildScan());
+        this.buildCache = new DevelocityBuildCacheApiAdapter(api.getBuildCache());
     }
 
     @Override
@@ -85,7 +87,6 @@ public class DevelocityApiAdapter implements DevelocityAdapter {
 
     @Override
     public BuildCacheApiAdapter getBuildCache() {
-        // TODO pshevche
-        return null;
+        return buildCache;
     }
 }
