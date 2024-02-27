@@ -70,6 +70,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.gradle</groupId>
+            <artifactId>develocity-maven-extension</artifactId>
+            <version>1.21-prerelease</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>3.0.20</version>
