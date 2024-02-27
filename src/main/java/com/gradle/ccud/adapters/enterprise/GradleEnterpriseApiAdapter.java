@@ -11,9 +11,11 @@ import java.nio.file.Path;
 public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
 
     private final GradleEnterpriseApi api;
+    private final BuildScanApiAdapter buildScan;
 
     public GradleEnterpriseApiAdapter(GradleEnterpriseApi api) {
         this.api = api;
+        this.buildScan = new GradleEnterpriseBuildScanApiAdapter(api.getBuildScan());
     }
 
     @Override
@@ -78,11 +80,12 @@ public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
 
     @Override
     public BuildScanApiAdapter getBuildScan() {
-        return null;
+        return buildScan;
     }
 
     @Override
     public BuildCacheApiAdapter getBuildCache() {
+        // TODO pshevche
         return null;
     }
 }
