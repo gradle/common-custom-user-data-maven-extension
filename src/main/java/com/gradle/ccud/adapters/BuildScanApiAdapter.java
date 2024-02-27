@@ -55,7 +55,9 @@ public interface BuildScanApiAdapter {
 
     BuildScanDataObfuscationAdapter getObfuscation();
 
-    void obfuscation(Consumer<? super BuildScanDataObfuscationAdapter> action);
+    default void obfuscation(Consumer<? super BuildScanDataObfuscationAdapter> action) {
+        action.accept(getObfuscation());
+    }
 
     BuildScanCaptureAdapter getCapture();
 

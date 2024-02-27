@@ -6,6 +6,7 @@ import com.gradle.ccud.adapters.BuildScanCaptureAdapter;
 import com.gradle.ccud.adapters.BuildScanDataObfuscationAdapter;
 import com.gradle.ccud.adapters.PublishedBuildScanAdapter;
 import com.gradle.ccud.adapters.shared.DefaultBuildResultAdapter;
+import com.gradle.ccud.adapters.shared.DefaultBuildScanDataObfuscationAdapter;
 import com.gradle.ccud.adapters.shared.DefaultPublishedBuildScanAdapter;
 import com.gradle.develocity.agent.maven.api.scan.BuildScanApi;
 
@@ -15,9 +16,15 @@ import java.util.function.Consumer;
 class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
 
     private final BuildScanApi buildScan;
+    private final BuildScanDataObfuscationAdapter obfuscation;
 
     DevelocityBuildScanApiAdapter(BuildScanApi buildScan) {
         this.buildScan = buildScan;
+        this.obfuscation = new DefaultBuildScanDataObfuscationAdapter(
+            buildScan.getObfuscation()::username,
+            buildScan.getObfuscation()::hostname,
+            buildScan.getObfuscation()::ipAddresses
+        );
     }
 
     @Override
@@ -132,12 +139,7 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
 
     @Override
     public BuildScanDataObfuscationAdapter getObfuscation() {
-        return null;
-    }
-
-    @Override
-    public void obfuscation(Consumer<? super BuildScanDataObfuscationAdapter> action) {
-
+        return obfuscation;
     }
 
     @Override
