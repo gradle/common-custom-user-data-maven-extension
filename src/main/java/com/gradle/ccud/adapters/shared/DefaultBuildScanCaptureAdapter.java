@@ -1,15 +1,15 @@
 package com.gradle.ccud.adapters.shared;
 
 import com.gradle.ccud.adapters.BuildScanCaptureAdapter;
-import com.gradle.ccud.adapters.PropertyConfigurator;
+import com.gradle.ccud.adapters.Property;
 
 public class DefaultBuildScanCaptureAdapter implements BuildScanCaptureAdapter {
 
-    private final PropertyConfigurator<Boolean> goalInputFiles;
-    private final PropertyConfigurator<Boolean> buildLogging;
-    private final PropertyConfigurator<Boolean> testLogging;
+    private final Property<Boolean> goalInputFiles;
+    private final Property<Boolean> buildLogging;
+    private final Property<Boolean> testLogging;
 
-    public DefaultBuildScanCaptureAdapter(PropertyConfigurator<Boolean> goalInputFiles, PropertyConfigurator<Boolean> buildLogging, PropertyConfigurator<Boolean> testLogging) {
+    public DefaultBuildScanCaptureAdapter(Property<Boolean> goalInputFiles, Property<Boolean> buildLogging, Property<Boolean> testLogging) {
         this.goalInputFiles = goalInputFiles;
         this.buildLogging = buildLogging;
         this.testLogging = testLogging;

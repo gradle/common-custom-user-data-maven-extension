@@ -2,21 +2,21 @@ package com.gradle.ccud.adapters.shared;
 
 import com.gradle.ccud.adapters.CleanupPolicyAdapter;
 import com.gradle.ccud.adapters.LocalBuildCacheAdapter;
-import com.gradle.ccud.adapters.PropertyConfigurator;
+import com.gradle.ccud.adapters.Property;
 
 import java.io.File;
 
 public class DefaultLocalBuildCacheAdapter implements LocalBuildCacheAdapter {
 
-    private final PropertyConfigurator<Boolean> enabled;
-    private final PropertyConfigurator<Boolean> storeEnabled;
-    private final PropertyConfigurator<File> directory;
+    private final Property<Boolean> enabled;
+    private final Property<Boolean> storeEnabled;
+    private final Property<File> directory;
     private final CleanupPolicyAdapter cleanupPolicyAdapter;
 
     public DefaultLocalBuildCacheAdapter(
-        PropertyConfigurator<Boolean> enabled,
-        PropertyConfigurator<Boolean> storeEnabled,
-        PropertyConfigurator<File> directory,
+        Property<Boolean> enabled,
+        Property<Boolean> storeEnabled,
+        Property<File> directory,
         CleanupPolicyAdapter cleanupPolicyAdapter
     ) {
         this.enabled = enabled;

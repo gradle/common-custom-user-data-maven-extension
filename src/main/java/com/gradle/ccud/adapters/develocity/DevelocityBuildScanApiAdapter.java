@@ -4,7 +4,7 @@ import com.gradle.ccud.adapters.BuildResultAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
 import com.gradle.ccud.adapters.BuildScanCaptureAdapter;
 import com.gradle.ccud.adapters.BuildScanDataObfuscationAdapter;
-import com.gradle.ccud.adapters.PropertyConfigurator;
+import com.gradle.ccud.adapters.Property;
 import com.gradle.ccud.adapters.PublishedBuildScanAdapter;
 import com.gradle.ccud.adapters.shared.DefaultBuildResultAdapter;
 import com.gradle.ccud.adapters.shared.DefaultBuildScanCaptureAdapter;
@@ -29,9 +29,9 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
             buildScan.getObfuscation()::ipAddresses
         );
         this.capture = new DefaultBuildScanCaptureAdapter(
-            new PropertyConfigurator<>(buildScan.getCapture()::setFileFingerprints, buildScan.getCapture()::isFileFingerprints),
-            new PropertyConfigurator<>(buildScan.getCapture()::setBuildLogging, buildScan.getCapture()::isBuildLogging),
-            new PropertyConfigurator<>(buildScan.getCapture()::setTestLogging, buildScan.getCapture()::isTestLogging)
+            new Property<>(buildScan.getCapture()::setFileFingerprints, buildScan.getCapture()::isFileFingerprints),
+            new Property<>(buildScan.getCapture()::setBuildLogging, buildScan.getCapture()::isBuildLogging),
+            new Property<>(buildScan.getCapture()::setTestLogging, buildScan.getCapture()::isTestLogging)
         );
     }
 

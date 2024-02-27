@@ -1,20 +1,20 @@
 package com.gradle.ccud.adapters.shared;
 
 import com.gradle.ccud.adapters.CleanupPolicyAdapter;
-import com.gradle.ccud.adapters.PropertyConfigurator;
+import com.gradle.ccud.adapters.Property;
 
 import java.time.Duration;
 
 public class DefaultCleanupPolicyAdapter implements CleanupPolicyAdapter {
 
-    private final PropertyConfigurator<Boolean> enabled;
-    private final PropertyConfigurator<Duration> retentionPeriod;
-    private final PropertyConfigurator<Duration> cleanupInterval;
+    private final Property<Boolean> enabled;
+    private final Property<Duration> retentionPeriod;
+    private final Property<Duration> cleanupInterval;
 
     public DefaultCleanupPolicyAdapter(
-        PropertyConfigurator<Boolean> enabled,
-        PropertyConfigurator<Duration> retentionPeriod,
-        PropertyConfigurator<Duration> cleanupInterval
+        Property<Boolean> enabled,
+        Property<Duration> retentionPeriod,
+        Property<Duration> cleanupInterval
     ) {
         this.enabled = enabled;
         this.retentionPeriod = retentionPeriod;
