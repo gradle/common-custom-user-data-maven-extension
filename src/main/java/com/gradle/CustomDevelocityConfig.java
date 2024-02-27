@@ -1,8 +1,8 @@
 package com.gradle;
 
-import com.gradle.maven.extension.api.GradleEnterpriseApi;
-import com.gradle.maven.extension.api.cache.BuildCacheApi;
-import com.gradle.maven.extension.api.scan.BuildScanApi;
+import com.gradle.ccud.adapters.BuildCacheApiAdapter;
+import com.gradle.ccud.adapters.BuildScanApiAdapter;
+import com.gradle.ccud.adapters.DevelocityAdapter;
 
 /**
  * Provide standardized Develocity configuration.
@@ -10,16 +10,16 @@ import com.gradle.maven.extension.api.scan.BuildScanApi;
  */
 final class CustomDevelocityConfig {
 
-    void configureGradleEnterprise(GradleEnterpriseApi gradleEnterprise) {
+    void configureDevelocity(DevelocityAdapter develocity) {
         /* Example of Develocity configuration
 
-        gradleEnterprise.setServer("https://enterprise-samples.gradle.com");
-        gradleEnterprise.setAllowUntrustedServer(false);
+        develocity.setServer("https://enterprise-samples.gradle.com");
+        develocity.setAllowUntrustedServer(false);
 
         */
     }
 
-    void configureBuildScanPublishing(BuildScanApi buildScans) {
+    void configureBuildScanPublishing(BuildScanApiAdapter buildScans) {
         /* Example of build scan publishing configuration
 
         boolean isCiServer = System.getenv().containsKey("CI");
@@ -31,7 +31,7 @@ final class CustomDevelocityConfig {
         */
     }
 
-    void configureBuildCache(BuildCacheApi buildCache) {
+    void configureBuildCache(BuildCacheApiAdapter buildCache) {
         /* Example of build cache configuration
 
         boolean isCiServer = System.getenv().containsKey("CI");
