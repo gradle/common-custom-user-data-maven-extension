@@ -160,11 +160,11 @@ final class CustomBuildScanEnhancements {
                 buildNumber.ifPresent(value ->
                     buildScan.value("CI build number", value));
                 nodeName.ifPresent(value ->
-                    addCustomValueAndSearchLink(buildScan, "CI node", value, value));
+                    addCustomValueAndSearchLink(buildScan, "CI node", value));
                 jobName.ifPresent(value ->
-                    addCustomValueAndSearchLink(buildScan, "CI job", value, value));
+                    addCustomValueAndSearchLink(buildScan, "CI job", value));
                 stageName.ifPresent(value ->
-                    addCustomValueAndSearchLink(buildScan, "CI stage", value, value));
+                    addCustomValueAndSearchLink(buildScan, "CI stage", value));
                 controllerUrl.ifPresent(value ->
                     buildScan.value("CI controller", value));
 
@@ -315,6 +315,7 @@ final class CustomBuildScanEnhancements {
                 Optional<String> azureProject = envVariable("SYSTEM_TEAMPROJECT");
                 Optional<String> buildId = envVariable("BUILD_BUILDID");
                 if (Stream.of(azureServerUrl, azureProject, buildId).allMatch(Optional::isPresent)) {
+                    //noinspection OptionalGetWithoutIsPresent
                     String buildUrl = String.format("%s%s/_build/results?buildId=%s",
                         azureServerUrl.get(), azureProject.get(), buildId.get());
                     buildScan.link("Azure Pipelines build", buildUrl);
