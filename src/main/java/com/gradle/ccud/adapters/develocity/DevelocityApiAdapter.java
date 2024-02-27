@@ -1,4 +1,4 @@
-package com.gradle.ccud.adapters.develocity.enterprise;
+package com.gradle.ccud.adapters.develocity;
 
 import com.gradle.ccud.adapters.BuildCacheApiAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;

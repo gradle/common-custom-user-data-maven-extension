@@ -1,10 +1,12 @@
-package com.gradle.ccud.adapters.develocity.enterprise;
+package com.gradle.ccud.adapters.develocity;
 
 import com.gradle.ccud.adapters.BuildResultAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
 import com.gradle.ccud.adapters.BuildScanCaptureAdapter;
 import com.gradle.ccud.adapters.BuildScanDataObfuscationAdapter;
 import com.gradle.ccud.adapters.PublishedBuildScanAdapter;
+import com.gradle.ccud.adapters.shared.DefaultBuildResultAdapter;
+import com.gradle.ccud.adapters.shared.DefaultPublishedBuildScanAdapter;
 import com.gradle.develocity.agent.maven.api.scan.BuildScanApi;
 
 import java.net.URI;
@@ -40,12 +42,12 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
 
     @Override
     public void buildFinished(Consumer<? super BuildResultAdapter> action) {
-        buildScan.buildFinished(result -> action.accept(BuildResultAdapter.from(result)));
+        buildScan.buildFinished(result -> action.accept(new DefaultBuildResultAdapter(result.getFailures())));
     }
 
     @Override
     public void buildScanPublished(Consumer<? super PublishedBuildScanAdapter> action) {
-        buildScan.buildScanPublished(scan -> action.accept(PublishedBuildScanAdapter.from(scan)));
+        buildScan.buildScanPublished(scan -> action.accept(new DefaultPublishedBuildScanAdapter(scan.getBuildScanId(), scan.getBuildScanUri())));
     }
 
     @Override
