@@ -4,21 +4,38 @@ import com.gradle.ccud.adapters.BuildCacheApiAdapter;
 import com.gradle.ccud.adapters.LocalBuildCacheAdapter;
 import com.gradle.ccud.adapters.MojoMetadataProviderAdapter;
 import com.gradle.ccud.adapters.NormalizationProviderAdapter;
+import com.gradle.ccud.adapters.PropertyConfigurator;
 import com.gradle.ccud.adapters.RemoteBuildCacheAdapter;
+import com.gradle.ccud.adapters.shared.DefaultCleanupPolicyAdapter;
+import com.gradle.ccud.adapters.shared.DefaultLocalBuildCacheAdapter;
 import com.gradle.develocity.agent.maven.api.cache.BuildCacheApi;
+import com.gradle.develocity.agent.maven.api.cache.CleanupPolicy;
+import com.gradle.develocity.agent.maven.api.cache.LocalBuildCache;
 
 class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     private final BuildCacheApi buildCache;
+    private final LocalBuildCacheAdapter localCache;
 
     DevelocityBuildCacheApiAdapter(BuildCacheApi buildCache) {
         this.buildCache = buildCache;
+        LocalBuildCache local = buildCache.getLocal();
+        CleanupPolicy cleanupPolicy = local.getCleanupPolicy();
+        this.localCache = new DefaultLocalBuildCacheAdapter(
+            new PropertyConfigurator<>(local::setEnabled, local::isEnabled),
+            new PropertyConfigurator<>(local::setStoreEnabled, local::isStoreEnabled),
+            new PropertyConfigurator<>(local::setDirectory, local::getDirectory),
+            new DefaultCleanupPolicyAdapter(
+                new PropertyConfigurator<>(cleanupPolicy::setEnabled, cleanupPolicy::isEnabled),
+                new PropertyConfigurator<>(cleanupPolicy::setRetentionPeriod, cleanupPolicy::getRetentionPeriod),
+                new PropertyConfigurator<>(cleanupPolicy::setCleanupInterval, cleanupPolicy::getCleanupInterval)
+            )
+        );
     }
 
     @Override
     public LocalBuildCacheAdapter getLocal() {
-        // TODO pshevche
-        return null;
+        return localCache;
     }
 
     @Override
