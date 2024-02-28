@@ -63,16 +63,18 @@
             <version>2.2.0</version>
             <scope>provided</scope>
         </dependency>
+        <!-- exposes GradleEnterprise* interfaces -->
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
             <version>1.20.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- exposes Develocity* interfaces -->
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>develocity-maven-extension</artifactId>
-            <version>1.21-prerelease</version>
+            <version>1.21</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
