@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * @see com.gradle.develocity.agent.maven.api.cache.MojoMetadataProvider
+ * @see com.gradle.maven.extension.api.cache.MojoMetadataProvider
+ */
 public interface MojoMetadataProviderAdapter {
 
     void provideMetadata(Context context);
@@ -24,8 +28,7 @@ public interface MojoMetadataProviderAdapter {
         void withPlugin(String artifactId, Runnable action);
 
         default Context skipIfTrue(String... propertyNames) {
-            skipIfTrue(Arrays.asList(propertyNames));
-            return this;
+            return skipIfTrue(Arrays.asList(propertyNames));
         }
 
         Context skipIfTrue(List<String> propertyNames);
@@ -68,8 +71,7 @@ public interface MojoMetadataProviderAdapter {
             FileSet include(List<String> includePatterns);
 
             default FileSet include(String... includePatterns) {
-                include(Arrays.asList(includePatterns));
-                return this;
+                return include(Arrays.asList(includePatterns));
             }
 
             FileSet excludesProperty(String excludePropertyName);
@@ -77,8 +79,7 @@ public interface MojoMetadataProviderAdapter {
             FileSet exclude(List<String> excludePatterns);
 
             default FileSet exclude(String... excludePatterns) {
-                exclude(Arrays.asList(excludePatterns));
-                return this;
+                return exclude(Arrays.asList(excludePatterns));
             }
 
             FileSet normalizationStrategy(NormalizationStrategy normalizationStrategy);

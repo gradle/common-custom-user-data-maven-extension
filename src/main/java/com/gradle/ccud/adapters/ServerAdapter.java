@@ -2,6 +2,10 @@ package com.gradle.ccud.adapters;
 
 import java.net.URI;
 
+/**
+ * @see com.gradle.develocity.agent.maven.api.cache.Server
+ * @see com.gradle.maven.extension.api.cache.Server
+ */
 public interface ServerAdapter {
 
     String getServerId();

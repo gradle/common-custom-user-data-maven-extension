@@ -7,21 +7,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * @see com.gradle.develocity.agent.maven.api.cache.NormalizationProvider
+ * @see com.gradle.maven.extension.api.cache.NormalizationProvider
+ */
 public interface NormalizationProviderAdapter {
 
     void configureNormalization(Context context);
 
     interface SystemPropertiesNormalization {
         default SystemPropertiesNormalization setIgnoredKeys(String... systemPropertyNames) {
-            setIgnoredKeys(Arrays.asList(systemPropertyNames));
-            return this;
+            return setIgnoredKeys(Arrays.asList(systemPropertyNames));
         }
 
         SystemPropertiesNormalization setIgnoredKeys(List<String> systemPropertyNames);
 
         default SystemPropertiesNormalization addIgnoredKeys(String... systemPropertyNames) {
-            addIgnoredKeys(Arrays.asList(systemPropertyNames));
-            return this;
+            return addIgnoredKeys(Arrays.asList(systemPropertyNames));
         }
 
         SystemPropertiesNormalization addIgnoredKeys(List<String> systemPropertyNames);
@@ -31,22 +33,19 @@ public interface NormalizationProviderAdapter {
         RuntimeClasspathNormalization setIgnoredFiles(List<String> ignoredFiles);
 
         default RuntimeClasspathNormalization setIgnoredFiles(String... ignoredFiles) {
-            setIgnoredFiles(Arrays.asList(ignoredFiles));
-            return this;
+            return setIgnoredFiles(Arrays.asList(ignoredFiles));
         }
 
         RuntimeClasspathNormalization addIgnoredFiles(List<String> ignoredFiles);
 
         default RuntimeClasspathNormalization addIgnoredFiles(String... ignoredFiles) {
-            addIgnoredFiles(Arrays.asList(ignoredFiles));
-            return this;
+            return addIgnoredFiles(Arrays.asList(ignoredFiles));
         }
 
         RuntimeClasspathNormalization addPropertiesNormalization(String path, List<String> ignoredProperties);
 
         default RuntimeClasspathNormalization addPropertiesNormalization(String path, String... ignoredProperties) {
-            addPropertiesNormalization(path, Arrays.asList(ignoredProperties));
-            return this;
+            return addPropertiesNormalization(path, Arrays.asList(ignoredProperties));
         }
 
         RuntimeClasspathNormalization configureMetaInf(Consumer<RuntimeClasspathNormalization.MetaInf> action);
@@ -55,29 +54,25 @@ public interface NormalizationProviderAdapter {
             RuntimeClasspathNormalization.MetaInf setIgnoredAttributes(List<String> ignoredAttributes);
 
             default RuntimeClasspathNormalization.MetaInf setIgnoredAttributes(String... ignoredAttributes) {
-                setIgnoredAttributes(Arrays.asList(ignoredAttributes));
-                return this;
+                return setIgnoredAttributes(Arrays.asList(ignoredAttributes));
             }
 
             RuntimeClasspathNormalization.MetaInf addIgnoredAttributes(List<String> ignoredAttributes);
 
             default RuntimeClasspathNormalization.MetaInf addIgnoredAttributes(String... ignoredAttributes) {
-                addIgnoredAttributes(Arrays.asList(ignoredAttributes));
-                return this;
+                return addIgnoredAttributes(Arrays.asList(ignoredAttributes));
             }
 
             RuntimeClasspathNormalization.MetaInf setIgnoredProperties(List<String> ignoredProperties);
 
             default RuntimeClasspathNormalization.MetaInf setIgnoredProperties(String... ignoredProperties) {
-                setIgnoredProperties(Arrays.asList(ignoredProperties));
-                return this;
+                return setIgnoredProperties(Arrays.asList(ignoredProperties));
             }
 
             RuntimeClasspathNormalization.MetaInf addIgnoredProperties(List<String> ignoredProperties);
 
             default RuntimeClasspathNormalization.MetaInf addIgnoredProperties(String... ignoredProperties) {
-                addIgnoredProperties(Arrays.asList(ignoredProperties));
-                return this;
+                return addIgnoredProperties(Arrays.asList(ignoredProperties));
             }
 
             RuntimeClasspathNormalization.MetaInf setIgnoreManifest(boolean ignoreManifest);
