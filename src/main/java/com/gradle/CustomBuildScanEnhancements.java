@@ -143,6 +143,7 @@ final class CustomBuildScanEnhancements {
 
         private void execute() {
             if (isJenkins() || isHudson()) {
+                String ciProvider = isJenkins() ? "Jenkins" : "Hudson";
                 String controllerUrlEnvVar = isJenkins() ? "JENKINS_URL" : "HUDSON_URL";
 
                 Optional<String> buildUrl = envVariable("BUILD_URL");
@@ -152,6 +153,7 @@ final class CustomBuildScanEnhancements {
                 Optional<String> stageName = envVariable("STAGE_NAME");
                 Optional<String> controllerUrl = envVariable(controllerUrlEnvVar);
 
+                buildScan.value("CI provider", ciProvider);
                 buildUrl.ifPresent(url ->
                         buildScan.link(isJenkins() ? "Jenkins build" : "Hudson build", url));
                 buildNumber.ifPresent(value ->
@@ -174,6 +176,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isTeamCity()) {
+                buildScan.value("CI provider", "TeamCity");
                 Optional<String> teamcityBuildPropertiesFile = envVariable("TEAMCITY_BUILD_PROPERTIES_FILE");
                 if (teamcityBuildPropertiesFile.isPresent()) {
                     Properties buildProperties = readPropertiesFile(teamcityBuildPropertiesFile.get());
@@ -208,6 +211,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isCircleCI()) {
+                buildScan.value("CI provider", "CircleCI");
                 envVariable("CIRCLE_BUILD_URL").ifPresent(url ->
                         buildScan.link("CircleCI build", url));
                 envVariable("CIRCLE_BUILD_NUM").ifPresent(value ->
@@ -219,6 +223,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isBamboo()) {
+                buildScan.value("CI provider", "Bamboo");
                 envVariable("bamboo_resultsUrl").ifPresent(url ->
                         buildScan.link("Bamboo build", url));
                 envVariable("bamboo_buildNumber").ifPresent(value ->
@@ -232,6 +237,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isGitHubActions()) {
+                buildScan.value("CI provider", "GitHub Actions");
                 Optional<String> gitHubUrl = envVariable("GITHUB_SERVER_URL");
                 Optional<String> gitRepository = envVariable("GITHUB_REPOSITORY");
                 Optional<String> gitHubRunId = envVariable("GITHUB_RUN_ID");
@@ -245,6 +251,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isGitLab()) {
+                buildScan.value("CI provider", "GitLab");
                 envVariable("CI_JOB_URL").ifPresent(url ->
                         buildScan.link("GitLab build", url));
                 envVariable("CI_PIPELINE_URL").ifPresent(url ->
@@ -256,6 +263,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isTravis()) {
+                buildScan.value("CI provider", "Travis");
                 envVariable("TRAVIS_BUILD_WEB_URL").ifPresent(url ->
                         buildScan.link("Travis build", url));
                 envVariable("TRAVIS_BUILD_NUMBER").ifPresent(value ->
@@ -266,6 +274,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isBitrise()) {
+                buildScan.value("CI provider", "Bitrise");
                 envVariable("BITRISE_BUILD_URL").ifPresent(url ->
                         buildScan.link("Bitrise build", url));
                 envVariable("BITRISE_BUILD_NUMBER").ifPresent(value ->
@@ -273,6 +282,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isGoCD()) {
+                buildScan.value("CI provider", "GoCD");
                 Optional<String> pipelineName = envVariable("GO_PIPELINE_NAME");
                 Optional<String> pipelineNumber = envVariable("GO_PIPELINE_COUNTER");
                 Optional<String> stageName = envVariable("GO_STAGE_NAME");
@@ -297,6 +307,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isAzurePipelines()) {
+                buildScan.value("CI provider", "Azure Pipelines");
                 Optional<String> azureServerUrl = envVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
                 Optional<String> azureProject = envVariable("SYSTEM_TEAMPROJECT");
                 Optional<String> buildId = envVariable("BUILD_BUILDID");
@@ -314,6 +325,7 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isBuildkite()) {
+                buildScan.value("CI provider", "Buildkite");
                 envVariable("BUILDKITE_BUILD_URL").ifPresent(url ->
                         buildScan.link("Buildkite build", url));
                 envVariable("BUILDKITE_COMMAND").ifPresent(command ->
