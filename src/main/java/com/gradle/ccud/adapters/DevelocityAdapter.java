@@ -37,4 +37,6 @@ public interface DevelocityAdapter {
 
     BuildCacheApiAdapter getBuildCache();
 
+    boolean isDevelocityApi();
+
 }

@@ -89,4 +89,9 @@ public class DevelocityApiAdapter implements DevelocityAdapter {
     public BuildCacheApiAdapter getBuildCache() {
         return buildCache;
     }
+
+    @Override
+    public boolean isDevelocityApi() {
+        return true;
+    }
 }
