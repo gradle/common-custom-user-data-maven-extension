@@ -92,7 +92,7 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     @Override
     public void registerMojoMetadataProvider(MojoMetadataProviderAdapter metadataProvider) {
-        // TODO pshevche
+        buildCache.registerMojoMetadataProvider(ctx -> metadataProvider.provideMetadata(new GradleEnterpriseMojoMetadataContext(ctx)));
     }
 
     @Override

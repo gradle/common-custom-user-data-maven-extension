@@ -4,6 +4,7 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.project.MavenProject;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -22,7 +23,10 @@ public interface MojoMetadataProviderAdapter {
 
         void withPlugin(String artifactId, Runnable action);
 
-        Context skipIfTrue(String... propertyNames);
+        default Context skipIfTrue(String... propertyNames) {
+            skipIfTrue(Arrays.asList(propertyNames));
+            return this;
+        }
 
         Context skipIfTrue(List<String> propertyNames);
 
@@ -63,13 +67,19 @@ public interface MojoMetadataProviderAdapter {
 
             FileSet include(List<String> includePatterns);
 
-            FileSet include(String... includePatterns);
+            default FileSet include(String... includePatterns) {
+                include(Arrays.asList(includePatterns));
+                return this;
+            }
 
             FileSet excludesProperty(String excludePropertyName);
 
             FileSet exclude(List<String> excludePatterns);
 
-            FileSet exclude(String... excludePatterns);
+            default FileSet exclude(String... excludePatterns) {
+                exclude(Arrays.asList(excludePatterns));
+                return this;
+            }
 
             FileSet normalizationStrategy(NormalizationStrategy normalizationStrategy);
 

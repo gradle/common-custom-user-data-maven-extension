@@ -92,7 +92,7 @@ class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     @Override
     public void registerMojoMetadataProvider(MojoMetadataProviderAdapter metadataProvider) {
-        // TODO pshevche
+        buildCache.registerMojoMetadataProvider(ctx -> metadataProvider.provideMetadata(new DevelocityMojoMetadataContext(ctx)));
     }
 
     @Override
