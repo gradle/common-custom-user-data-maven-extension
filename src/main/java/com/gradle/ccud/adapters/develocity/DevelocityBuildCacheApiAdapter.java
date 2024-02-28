@@ -97,6 +97,6 @@ class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     @Override
     public void registerNormalizationProvider(NormalizationProviderAdapter normalizationProvider) {
-        // TODO pshevche
+        buildCache.registerNormalizationProvider(ctx -> normalizationProvider.configureNormalization(new DevelocityNormalizationContext(ctx)));
     }
 }

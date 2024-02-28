@@ -97,6 +97,6 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     @Override
     public void registerNormalizationProvider(NormalizationProviderAdapter normalizationProvider) {
-        // TODO pshevche
+        buildCache.registerNormalizationProvider(ctx -> normalizationProvider.configureNormalization(new GradleEnterpriseNormalizationContext(ctx)));
     }
 }
