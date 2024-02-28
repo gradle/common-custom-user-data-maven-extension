@@ -17,7 +17,7 @@ public final class CommonCustomUserDataDevelocityListener extends CommonCustomUs
 
     @Override
     public void configure(DevelocityApi api, MavenSession session) throws MavenExecutionException {
-        super.configure(new DevelocityApiAdapter(api), session, "Develocity");
+        super.configure(new DevelocityApiAdapter(api), session, CustomConfigurationSpec.DEVELOCITY);
     }
 
 }

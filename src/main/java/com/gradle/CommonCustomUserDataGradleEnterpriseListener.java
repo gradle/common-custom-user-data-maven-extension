@@ -17,7 +17,7 @@ public final class CommonCustomUserDataGradleEnterpriseListener extends CommonCu
 
     @Override
     public void configure(GradleEnterpriseApi api, MavenSession session) throws MavenExecutionException {
-        super.configure(new GradleEnterpriseApiAdapter(api), session, "Gradle Enterprise");
+        super.configure(new GradleEnterpriseApiAdapter(api), session, CustomConfigurationSpec.DEVELOCITY);
     }
 
 }

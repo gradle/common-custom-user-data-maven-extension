@@ -15,14 +15,14 @@ abstract class CommonCustomUserDataListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonCustomUserDataListener.class);
     private static final AtomicBoolean SINGLE_APPLICATION_LOCK = new AtomicBoolean(false);
 
-    protected void configure(DevelocityAdapter api, MavenSession session, String extensionName) throws MavenExecutionException {
+    protected void configure(DevelocityAdapter api, MavenSession session, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
         if (SINGLE_APPLICATION_LOCK.compareAndSet(false, true)) {
             LOGGER.debug("Executing extension: " + getClass().getSimpleName());
             CustomDevelocityConfig customDevelocityConfig = new CustomDevelocityConfig();
 
-            LOGGER.debug("Configuring {}", extensionName);
+            LOGGER.debug("Configuring {}", customConfigurationSpec.displayName);
             customDevelocityConfig.configureDevelocity(api);
-            LOGGER.debug("Finished configuring {}", extensionName);
+            LOGGER.debug("Finished configuring {}", customConfigurationSpec.displayName);
 
             LOGGER.debug("Configuring build scan publishing and applying build scan enhancements");
             BuildScanApiAdapter buildScan = api.getBuildScan();
@@ -35,7 +35,7 @@ abstract class CommonCustomUserDataListener {
             customDevelocityConfig.configureBuildCache(buildCache);
             LOGGER.debug("Finished configuring build cache");
 
-            GroovyScriptUserData.evaluate(session, api, LOGGER);
+            GroovyScriptUserData.evaluate(session, api, LOGGER, customConfigurationSpec);
         }
     }
 

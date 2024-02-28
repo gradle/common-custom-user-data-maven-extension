@@ -8,46 +8,38 @@ import org.apache.maven.execution.MavenSession;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 final class GroovyScriptUserData {
 
-    static void evaluate(MavenSession session, DevelocityAdapter develocity, Logger logger) throws MavenExecutionException {
-        List<File> groovyScripts = getGroovyScripts(session);
-        for (File script : groovyScripts) {
-            if (script.exists()) {
-                logger.debug("Evaluating custom user data Groovy script: " + script);
-                evaluateGroovyScript(session, develocity, logger, script);
-            } else {
-                logger.debug("Skipping evaluation of custom user data Groovy script because it does not exist: " + script);
-            }
+    static void evaluate(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
+        File script = getGroovyScript(session, customConfigurationSpec.groovyScriptName);
+        if (script.exists()) {
+            logger.debug("Evaluating custom user data Groovy script: " + script);
+            evaluateGroovyScript(session, develocity, logger, script, customConfigurationSpec.apiVariableName);
+        } else {
+            logger.debug("Skipping evaluation of custom user data Groovy script because it does not exist: " + script);
         }
     }
 
-    private static List<File> getGroovyScripts(MavenSession session) {
+    private static File getGroovyScript(MavenSession session, String scriptName) {
         File rootDir = session.getRequest().getMultiModuleProjectDirectory();
-        return Arrays.asList(
-            new File(rootDir, ".mvn/gradle-enterprise-custom-user-data.groovy"),
-            new File(rootDir, ".mvn/develocity-custom-user-data.groovy")
-        );
+        return new File(rootDir, ".mvn/" + scriptName + ".groovy");
     }
 
-    private static void evaluateGroovyScript(MavenSession session, DevelocityAdapter develocity, Logger logger, File groovyScript) throws MavenExecutionException {
+    private static void evaluateGroovyScript(MavenSession session, DevelocityAdapter develocity, Logger logger, File groovyScript, String apiVariableName) throws MavenExecutionException {
         try {
-            Binding binding = prepareBinding(session, develocity, logger);
+            Binding binding = prepareBinding(session, develocity, logger, apiVariableName);
             new GroovyShell(GroovyScriptUserData.class.getClassLoader(), binding).evaluate(groovyScript);
         } catch (Exception e) {
             throw new MavenExecutionException("Failed to evaluate custom user data Groovy script: " + groovyScript, e);
         }
     }
 
-    private static Binding prepareBinding(MavenSession session, DevelocityAdapter develocity, Logger logger) {
+    private static Binding prepareBinding(MavenSession session, DevelocityAdapter develocity, Logger logger, String apiVariableName) {
         Binding binding = new Binding();
         binding.setVariable("project", session.getTopLevelProject());
         binding.setVariable("session", session);
-        binding.setVariable("develocity", develocity);
-        binding.setVariable("gradleEnterprise", develocity);
+        binding.setVariable(apiVariableName, develocity);
         binding.setVariable("buildScan", develocity.getBuildScan());
         binding.setVariable("buildCache", develocity.getBuildCache());
         binding.setVariable("log", logger);
