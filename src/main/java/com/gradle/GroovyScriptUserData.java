@@ -14,10 +14,19 @@ final class GroovyScriptUserData {
     static void evaluate(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
         File script = getGroovyScript(session, customConfigurationSpec.groovyScriptName);
         if (script.exists()) {
-            logger.debug("Evaluating custom user data Groovy script: " + script);
+            logger.debug("Evaluating custom user data Groovy script: {}", script);
             evaluateGroovyScript(session, develocity, logger, script, customConfigurationSpec.apiVariableName);
-        } else {
+        } else if (!customConfigurationSpec.fallbackScript.isPresent()) {
             logger.debug("Skipping evaluation of custom user data Groovy script because it does not exist: " + script);
+        } else {
+            CustomConfigurationSpec fallbackSpec = customConfigurationSpec.fallbackScript.get();
+            File fallbackScript = getGroovyScript(session, fallbackSpec.groovyScriptName);
+            if (fallbackScript.exists()) {
+                logger.warn("Evaluating deprecated custom user data Groovy script: {}. Use '{}.groovy' scripts instead.", fallbackScript, customConfigurationSpec.groovyScriptName);
+                evaluateGroovyScript(session, develocity, logger, fallbackScript, fallbackSpec.apiVariableName);
+            } else {
+                logger.debug("Skipping evaluation of custom user data Groovy script because it does not exist: " + fallbackScript);
+            }
         }
     }
 
