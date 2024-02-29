@@ -3,6 +3,7 @@ package com.gradle.ccud.adapters.enterprise;
 import com.gradle.ccud.adapters.BuildCacheApiAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
 import com.gradle.ccud.adapters.DevelocityAdapter;
+import com.gradle.ccud.adapters.Property;
 import com.gradle.maven.extension.api.GradleEnterpriseApi;
 
 import java.net.URI;
@@ -13,11 +14,13 @@ public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
     private final GradleEnterpriseApi api;
     private final BuildScanApiAdapter buildScan;
     private final BuildCacheApiAdapter buildCache;
+    private final Property<String> projectId;
 
     public GradleEnterpriseApiAdapter(GradleEnterpriseApi api) {
         this.api = api;
         this.buildScan = new GradleEnterpriseBuildScanApiAdapter(api.getBuildScan());
         this.buildCache = new GradleEnterpriseBuildCacheApiAdapter(api.getBuildCache());
+        this.projectId = Property.optional(api, "setProjectId", "getProjectId");
     }
 
     @Override
@@ -32,12 +35,12 @@ public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
 
     @Override
     public void setProjectId(String projectId) {
-        api.setProjectId(projectId);
+        this.projectId.set(projectId);
     }
 
     @Override
     public String getProjectId() {
-        return api.getProjectId();
+        return projectId.get();
     }
 
     @Override

@@ -29,9 +29,9 @@ class GradleEnterpriseBuildScanApiAdapter implements BuildScanApiAdapter {
             buildScan.getObfuscation()::ipAddresses
         );
         this.capture = new DefaultBuildScanCaptureAdapter(
-            new Property<>(buildScan.getCapture()::setGoalInputFiles, buildScan.getCapture()::isGoalInputFiles),
-            new Property<>(buildScan.getCapture()::setBuildLogging, buildScan.getCapture()::isBuildLogging),
-            new Property<>(buildScan.getCapture()::setTestLogging, buildScan.getCapture()::isTestLogging)
+            Property.create(buildScan.getCapture()::setGoalInputFiles, buildScan.getCapture()::isGoalInputFiles),
+            Property.create(buildScan.getCapture()::setBuildLogging, buildScan.getCapture()::isBuildLogging),
+            Property.create(buildScan.getCapture()::setTestLogging, buildScan.getCapture()::isTestLogging)
         );
     }
 

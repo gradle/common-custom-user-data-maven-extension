@@ -34,13 +34,13 @@ class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
         LocalBuildCache local = buildCache.getLocal();
         CleanupPolicy cleanupPolicy = local.getCleanupPolicy();
         return new DefaultLocalBuildCacheAdapter(
-            new Property<>(local::setEnabled, local::isEnabled),
-            new Property<>(local::setStoreEnabled, local::isStoreEnabled),
-            new Property<>(local::setDirectory, local::getDirectory),
+            Property.create(local::setEnabled, local::isEnabled),
+            Property.create(local::setStoreEnabled, local::isStoreEnabled),
+            Property.create(local::setDirectory, local::getDirectory),
             new DefaultCleanupPolicyAdapter(
-                new Property<>(cleanupPolicy::setEnabled, cleanupPolicy::isEnabled),
-                new Property<>(cleanupPolicy::setRetentionPeriod, cleanupPolicy::getRetentionPeriod),
-                new Property<>(cleanupPolicy::setCleanupInterval, cleanupPolicy::getCleanupInterval)
+                Property.create(cleanupPolicy::setEnabled, cleanupPolicy::isEnabled),
+                Property.create(cleanupPolicy::setRetentionPeriod, cleanupPolicy::getRetentionPeriod),
+                Property.create(cleanupPolicy::setCleanupInterval, cleanupPolicy::getCleanupInterval)
             )
         );
     }
@@ -49,8 +49,8 @@ class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
         RemoteBuildCache remote = buildCache.getRemote();
         Server server = remote.getServer();
         return new DefaultRemoteBuildCacheAdapter(
-            new Property<>(remote::setEnabled, remote::isEnabled),
-            new Property<>(remote::setStoreEnabled, remote::isStoreEnabled),
+            Property.create(remote::setEnabled, remote::isEnabled),
+            Property.create(remote::setStoreEnabled, remote::isStoreEnabled),
             createServerAdapter(server)
         );
     }
@@ -58,14 +58,14 @@ class DevelocityBuildCacheApiAdapter implements BuildCacheApiAdapter {
     private static DefaultServerAdapter createServerAdapter(Server server) {
         Credentials credentials = server.getCredentials();
         return new DefaultServerAdapter(
-            new Property<>(server::setServerId, server::getServerId),
-            new Property<>(server::setUrl, server::getUrl),
-            new Property<>(server::setAllowUntrusted, server::isAllowUntrusted),
-            new Property<>(server::setAllowInsecureProtocol, server::isAllowInsecureProtocol),
-            new Property<>(server::setUseExpectContinue, server::isUseExpectContinue),
+            Property.create(server::setServerId, server::getServerId),
+            Property.create(server::setUrl, server::getUrl),
+            Property.create(server::setAllowUntrusted, server::isAllowUntrusted),
+            Property.create(server::setAllowInsecureProtocol, server::isAllowInsecureProtocol),
+            Property.create(server::setUseExpectContinue, server::isUseExpectContinue),
             new DefaultCredentialsAdapter(
-                new Property<>(credentials::setUsername, credentials::getUsername),
-                new Property<>(credentials::setPassword, credentials::getPassword)
+                Property.create(credentials::setUsername, credentials::getUsername),
+                Property.create(credentials::setPassword, credentials::getPassword)
             )
         );
     }

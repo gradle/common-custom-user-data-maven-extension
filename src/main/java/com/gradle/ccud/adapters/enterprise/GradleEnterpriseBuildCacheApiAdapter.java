@@ -18,6 +18,8 @@ import com.gradle.maven.extension.api.cache.LocalBuildCache;
 import com.gradle.maven.extension.api.cache.RemoteBuildCache;
 import com.gradle.maven.extension.api.cache.Server;
 
+import static com.gradle.ccud.adapters.ReflectionUtils.withMethodSupported;
+
 class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     private final BuildCacheApi buildCache;
@@ -34,13 +36,13 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
         LocalBuildCache local = buildCache.getLocal();
         CleanupPolicy cleanupPolicy = local.getCleanupPolicy();
         return new DefaultLocalBuildCacheAdapter(
-            new Property<>(local::setEnabled, local::isEnabled),
-            new Property<>(local::setStoreEnabled, local::isStoreEnabled),
-            new Property<>(local::setDirectory, local::getDirectory),
+            Property.create(local::setEnabled, local::isEnabled),
+            Property.optional(local, "setStoreEnabled", "isStoreEnabled"),
+            Property.create(local::setDirectory, local::getDirectory),
             new DefaultCleanupPolicyAdapter(
-                new Property<>(cleanupPolicy::setEnabled, cleanupPolicy::isEnabled),
-                new Property<>(cleanupPolicy::setRetentionPeriod, cleanupPolicy::getRetentionPeriod),
-                new Property<>(cleanupPolicy::setCleanupInterval, cleanupPolicy::getCleanupInterval)
+                Property.create(cleanupPolicy::setEnabled, cleanupPolicy::isEnabled),
+                Property.create(cleanupPolicy::setRetentionPeriod, cleanupPolicy::getRetentionPeriod),
+                Property.create(cleanupPolicy::setCleanupInterval, cleanupPolicy::getCleanupInterval)
             )
         );
     }
@@ -49,8 +51,8 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
         RemoteBuildCache remote = buildCache.getRemote();
         Server server = remote.getServer();
         return new DefaultRemoteBuildCacheAdapter(
-            new Property<>(remote::setEnabled, remote::isEnabled),
-            new Property<>(remote::setStoreEnabled, remote::isStoreEnabled),
+            Property.create(remote::setEnabled, remote::isEnabled),
+            Property.create(remote::setStoreEnabled, remote::isStoreEnabled),
             createServerAdapter(server)
         );
     }
@@ -58,14 +60,14 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
     private static DefaultServerAdapter createServerAdapter(Server server) {
         Credentials credentials = server.getCredentials();
         return new DefaultServerAdapter(
-            new Property<>(server::setServerId, server::getServerId),
-            new Property<>(server::setUrl, server::getUrl),
-            new Property<>(server::setAllowUntrusted, server::isAllowUntrusted),
-            new Property<>(server::setAllowInsecureProtocol, server::isAllowInsecureProtocol),
-            new Property<>(server::setUseExpectContinue, server::isUseExpectContinue),
+            Property.create(server::setServerId, server::getServerId),
+            Property.create(server::setUrl, server::getUrl),
+            Property.create(server::setAllowUntrusted, server::isAllowUntrusted),
+            Property.optional(server, "setAllowInsecureProtocol", "isAllowInsecureProtocol"),
+            Property.optional(server, "setUseExpectContinue", "isUseExpectContinue"),
             new DefaultCredentialsAdapter(
-                new Property<>(credentials::setUsername, credentials::getUsername),
-                new Property<>(credentials::setPassword, credentials::getPassword)
+                Property.create(credentials::setUsername, credentials::getUsername),
+                Property.create(credentials::setPassword, credentials::getPassword)
             )
         );
     }
@@ -92,11 +94,19 @@ class GradleEnterpriseBuildCacheApiAdapter implements BuildCacheApiAdapter {
 
     @Override
     public void registerMojoMetadataProvider(MojoMetadataProviderAdapter metadataProvider) {
-        buildCache.registerMojoMetadataProvider(ctx -> metadataProvider.provideMetadata(new GradleEnterpriseMojoMetadataContext(ctx)));
+        withMethodSupported(
+            buildCache,
+            "registerMojoMetadataProvider",
+            () -> buildCache.registerMojoMetadataProvider(ctx -> metadataProvider.provideMetadata(new GradleEnterpriseMojoMetadataContext(ctx)))
+        );
     }
 
     @Override
     public void registerNormalizationProvider(NormalizationProviderAdapter normalizationProvider) {
-        buildCache.registerNormalizationProvider(ctx -> normalizationProvider.configureNormalization(new GradleEnterpriseNormalizationContext(ctx)));
+        withMethodSupported(
+            buildCache,
+            "registerNormalizationProvider",
+            () -> buildCache.registerNormalizationProvider(ctx -> normalizationProvider.configureNormalization(new GradleEnterpriseNormalizationContext(ctx)))
+        );
     }
 }

@@ -8,9 +8,9 @@ import org.apache.maven.execution.MavenSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class CommonCustomUserDataListener {
+import static com.gradle.CommonCustomUserDataDevelocityLogger.LOGGER;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommonCustomUserDataListener.class);
+abstract class CommonCustomUserDataListener {
 
     protected void configure(DevelocityAdapter api, MavenSession session, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
         LOGGER.debug("Executing extension: " + getClass().getSimpleName());
