@@ -62,7 +62,7 @@ class DevelocityMojoMetadataContext implements MojoMetadataProviderAdapter.Conte
     @Override
     public MojoMetadataProviderAdapter.Context localState(Consumer<? super MojoMetadataProviderAdapter.Context.LocalState> action) {
         ctx.localState(state -> action.accept(new LocalState(state)));
-        return null;
+        return this;
     }
 
     @Override
