@@ -33,7 +33,8 @@ class GradleEnterpriseNormalizationContext implements NormalizationProviderAdapt
 
     @Override
     public NormalizationProviderAdapter.Context configureSystemPropertiesNormalization(Consumer<NormalizationProviderAdapter.SystemPropertiesNormalization> action) {
-        return null;
+        ctx.configureSystemPropertiesNormalization(normalization -> action.accept(new SystemPropertiesNormalization(normalization)));
+        return this;
     }
 
     private static class RuntimeClasspathNormalization implements NormalizationProviderAdapter.RuntimeClasspathNormalization {
@@ -111,6 +112,26 @@ class GradleEnterpriseNormalizationContext implements NormalizationProviderAdapt
                 metaInf.setIgnoreCompletely(ignoreCompletely);
                 return this;
             }
+        }
+    }
+
+    private static class SystemPropertiesNormalization implements NormalizationProviderAdapter.SystemPropertiesNormalization {
+        private final NormalizationProvider.SystemPropertiesNormalization normalization;
+
+        public SystemPropertiesNormalization(NormalizationProvider.SystemPropertiesNormalization normalization) {
+            this.normalization = normalization;
+        }
+
+        @Override
+        public NormalizationProviderAdapter.SystemPropertiesNormalization setIgnoredKeys(List<String> systemPropertyNames) {
+            normalization.setIgnoredKeys(systemPropertyNames);
+            return this;
+        }
+
+        @Override
+        public NormalizationProviderAdapter.SystemPropertiesNormalization addIgnoredKeys(List<String> systemPropertyNames) {
+            normalization.addIgnoredKeys(systemPropertyNames);
+            return this;
         }
     }
 }
