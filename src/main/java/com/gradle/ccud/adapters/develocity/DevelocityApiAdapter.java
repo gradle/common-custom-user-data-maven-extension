@@ -2,13 +2,13 @@ package com.gradle.ccud.adapters.develocity;
 
 import com.gradle.ccud.adapters.BuildCacheApiAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
-import com.gradle.ccud.adapters.DevelocityAdapter;
+import com.gradle.ccud.adapters.CoreApiAdapter;
 import com.gradle.develocity.agent.maven.api.DevelocityApi;
 
 import java.net.URI;
 import java.nio.file.Path;
 
-public class DevelocityApiAdapter implements DevelocityAdapter {
+public class DevelocityApiAdapter implements CoreApiAdapter {
 
     private final DevelocityApi api;
     private final BuildScanApiAdapter buildScan;

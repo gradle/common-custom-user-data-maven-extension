@@ -2,14 +2,14 @@ package com.gradle.ccud.adapters.enterprise;
 
 import com.gradle.ccud.adapters.BuildCacheApiAdapter;
 import com.gradle.ccud.adapters.BuildScanApiAdapter;
-import com.gradle.ccud.adapters.DevelocityAdapter;
+import com.gradle.ccud.adapters.CoreApiAdapter;
 import com.gradle.ccud.adapters.Property;
 import com.gradle.maven.extension.api.GradleEnterpriseApi;
 
 import java.net.URI;
 import java.nio.file.Path;
 
-public class GradleEnterpriseApiAdapter implements DevelocityAdapter {
+public class GradleEnterpriseApiAdapter implements CoreApiAdapter {
 
     private final GradleEnterpriseApi api;
     private final BuildScanApiAdapter buildScan;

@@ -7,7 +7,7 @@ import java.nio.file.Path;
  * @see com.gradle.develocity.agent.maven.api.DevelocityApi
  * @see com.gradle.maven.extension.api.GradleEnterpriseApi
  */
-public interface DevelocityAdapter {
+public interface CoreApiAdapter {
 
     boolean isEnabled();
 

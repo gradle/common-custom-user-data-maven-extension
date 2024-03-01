@@ -60,7 +60,7 @@ Groovy script. This is a good intermediate step before creating your own extensi
 The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` or `.mvn/develocity-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
-- `gradleEnterprise/develocity` (type: [DevelocityAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure Develocity_
+- `gradleEnterprise/develocity` (type: [CoreApiAdapter](src/main/java/com/gradle/ccud/adapters/CoreApiAdapter.java)): _configure Develocity_
 - `buildScan` (type: [BuildScanApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build scan publishing and enhance build scans_
 - `buildCache` (type: [BuildCacheApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build cache_
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
