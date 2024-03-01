@@ -1,6 +1,5 @@
 package com.gradle.ccud.adapters;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
@@ -25,7 +24,7 @@ public class ReflectionUtils {
 
             warnAboutUnsupportedMethod(method);
             return null;
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        } catch (ReflectiveOperationException e) {
             warnAboutUnsupportedMethod(method);
             return null;
         }

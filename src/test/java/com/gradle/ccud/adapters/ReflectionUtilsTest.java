@@ -13,7 +13,6 @@ class ReflectionUtilsTest {
     private static class Subject {
         private int value;
 
-
         public int getValue() {
             return value;
         }
