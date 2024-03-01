@@ -40,7 +40,7 @@ public final class Property<T> {
 
     @SuppressWarnings("unchecked")
     private static <T> T getIfSupported(Object obj, String method) {
-        return (T) invokeMethod(obj, method).orElse(null);
+        return (T) invokeMethod(obj, method);
     }
 
 }

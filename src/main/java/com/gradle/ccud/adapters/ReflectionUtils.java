@@ -1,6 +1,7 @@
 package com.gradle.ccud.adapters;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -11,13 +12,22 @@ public class ReflectionUtils {
     private ReflectionUtils() {
     }
 
-    public static Optional<Object> invokeMethod(Object obj, String method, Object... args) {
+    public static Object invokeMethod(Object obj, String method, Object... args) {
         try {
-            Class<?>[] argClasses = Arrays.stream(args).map(Object::getClass).toArray(Class[]::new);
-            return Optional.ofNullable(obj.getClass().getMethod(method, argClasses).invoke(obj, args));
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            // this is a simplified lookup which allows us to discover methods using both primitive and wrapper types
+            Optional<Method> maybeMethod = Arrays.stream(obj.getClass().getMethods())
+                .filter(it -> it.getName().equals(method))
+                .findFirst();
+
+            if (maybeMethod.isPresent()) {
+                return maybeMethod.get().invoke(obj, args);
+            }
+
             warnAboutUnsupportedMethod(method);
-            return Optional.empty();
+            return null;
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            warnAboutUnsupportedMethod(method);
+            return null;
         }
     }
 
