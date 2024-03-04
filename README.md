@@ -61,8 +61,8 @@ The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise
 the script with the following bindings:
 
 - `gradleEnterprise/develocity` (type: [CoreApiAdapter](src/main/java/com/gradle/ccud/adapters/CoreApiAdapter.java)): _configure Develocity_
-- `buildScan` (type: [BuildScanApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build scan publishing and enhance build scans_
-- `buildCache` (type: [BuildCacheApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build cache_
+- `buildScan` (type: [BuildScanApiAdapter](src/main/java/com/gradle/ccud/adapters/BuildScanApiAdapter.java)): _configure build scan publishing and enhance build scans_
+- `buildCache` (type: [BuildCacheApiAdapter](src/main/java/com/gradle/ccud/adapters/BuildCacheApiAdapter.java)): _configure build cache_
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
