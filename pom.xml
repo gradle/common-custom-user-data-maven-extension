@@ -50,6 +50,13 @@
         </developer>
     </developers>
 
+    <repositories>
+        <repository>
+            <id>Develocity extension RC repository</id>
+            <url>https://repo.grdev.net/artifactory/public</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -74,7 +81,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>develocity-maven-extension</artifactId>
-            <version>1.21</version>
+            <version>1.21-rc-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
