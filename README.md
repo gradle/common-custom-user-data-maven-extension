@@ -57,12 +57,12 @@ captured and under which conditions.
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default. The additional configuration happens in a specific
 Groovy script. This is a good intermediate step before creating your own extension.
 
-The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
+The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` or `.mvn/develocity-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
-- `gradleEnterprise` (type: [GradleEnterpriseApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/GradleEnterpriseApi.html)): _configure Develocity_
-- `buildScan` (type: [BuildScanApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/scan/BuildScanApi.html)): _configure build scan publishing and enhance build scans_
-- `buildCache` (type: [BuildCacheApi](https://docs.gradle.com/enterprise/maven-extension/api/com/gradle/maven/extension/api/cache/BuildCacheApi.html)): _configure build cache_
+- `gradleEnterprise/develocity` (type: [CoreApiAdapter](src/main/java/com/gradle/ccud/adapters/CoreApiAdapter.java)): _configure Develocity_
+- `buildScan` (type: [BuildScanApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build scan publishing and enhance build scans_
+- `buildCache` (type: [BuildCacheApiAdapter](src/main/java/com/gradle/ccud/adapters/DevelocityAdapter.java)): _configure build cache_
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
