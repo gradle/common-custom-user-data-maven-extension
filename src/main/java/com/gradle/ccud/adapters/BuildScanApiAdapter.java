@@ -21,13 +21,13 @@ public interface BuildScanApiAdapter {
 
     void buildScanPublished(Consumer<? super PublishedBuildScanAdapter> action);
 
-    void setTermsOfServiceUrl(String termsOfServiceUrl);
+    void setTermsOfUseUrl(String termsOfServiceUrl);
 
-    String getTermsOfServiceUrl();
+    String getTermsOfUseUrl();
 
-    void setTermsOfServiceAgree(String agree);
+    void setTermsOfUseAgree(String agree);
 
-    String getTermsOfServiceAgree();
+    String getTermsOfUseAgree();
 
     default void setServer(String url) {
         setServer(url == null ? null : URI.create(url));

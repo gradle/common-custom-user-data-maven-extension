@@ -66,23 +66,23 @@ class DevelocityBuildScanApiAdapter implements BuildScanApiAdapter {
     }
 
     @Override
-    public void setTermsOfServiceUrl(String termsOfServiceUrl) {
-        buildScan.setTermsOfServiceUrl(termsOfServiceUrl);
+    public void setTermsOfUseUrl(String termsOfServiceUrl) {
+        buildScan.setTermsOfUseUrl(termsOfServiceUrl);
     }
 
     @Override
-    public String getTermsOfServiceUrl() {
-        return buildScan.getTermsOfServiceUrl();
+    public String getTermsOfUseUrl() {
+        return buildScan.getTermsOfUseUrl();
     }
 
     @Override
-    public void setTermsOfServiceAgree(String agree) {
-        buildScan.setTermsOfServiceAgree(agree);
+    public void setTermsOfUseAgree(String agree) {
+        buildScan.setTermsOfUseAgree(agree);
     }
 
     @Override
-    public String getTermsOfServiceAgree() {
-        return buildScan.getTermsOfServiceAgree();
+    public String getTermsOfUseAgree() {
+        return buildScan.getTermsOfUseAgree();
     }
 
     @Override
