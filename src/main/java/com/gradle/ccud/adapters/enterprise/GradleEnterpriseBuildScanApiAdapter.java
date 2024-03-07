@@ -66,22 +66,22 @@ class GradleEnterpriseBuildScanApiAdapter implements BuildScanApiAdapter {
     }
 
     @Override
-    public void setTermsOfServiceUrl(String termsOfServiceUrl) {
+    public void setTermsOfUseUrl(String termsOfServiceUrl) {
         buildScan.setTermsOfServiceUrl(termsOfServiceUrl);
     }
 
     @Override
-    public String getTermsOfServiceUrl() {
+    public String getTermsOfUseUrl() {
         return buildScan.getTermsOfServiceUrl();
     }
 
     @Override
-    public void setTermsOfServiceAgree(String agree) {
+    public void setTermsOfUseAgree(String agree) {
         buildScan.setTermsOfServiceAgree(agree);
     }
 
     @Override
-    public String getTermsOfServiceAgree() {
+    public String getTermsOfUseAgree() {
         return buildScan.getTermsOfServiceAgree();
     }
 
