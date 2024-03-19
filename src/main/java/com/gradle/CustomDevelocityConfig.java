@@ -1,8 +1,8 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.BuildCacheApiAdapter;
-import com.gradle.ccud.adapters.BuildScanApiAdapter;
-import com.gradle.ccud.adapters.CoreApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.BuildCacheApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.DevelocityAdapter;
 
 /**
  * Provide standardized Develocity configuration.
@@ -10,7 +10,7 @@ import com.gradle.ccud.adapters.CoreApiAdapter;
  */
 final class CustomDevelocityConfig {
 
-    void configureDevelocity(CoreApiAdapter develocity) {
+    void configureDevelocity(DevelocityAdapter develocity) {
         /* Example of Develocity configuration
 
         develocity.setServer("https://enterprise-samples.gradle.com");

@@ -1,6 +1,6 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.develocity.DevelocityApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.develocity.DevelocityApiAdapter;
 import com.gradle.develocity.agent.maven.api.DevelocityApi;
 import com.gradle.develocity.agent.maven.api.DevelocityListener;
 import org.apache.maven.MavenExecutionException;

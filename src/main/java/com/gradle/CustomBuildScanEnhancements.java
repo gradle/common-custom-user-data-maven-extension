@@ -1,7 +1,6 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.BuildScanApiAdapter;
-import com.gradle.maven.extension.api.scan.BuildScanApi;
+import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter;
 import org.apache.maven.execution.MavenSession;
 
 import java.net.URI;
