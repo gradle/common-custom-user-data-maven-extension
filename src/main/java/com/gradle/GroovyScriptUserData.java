@@ -1,6 +1,6 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.CoreApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.DevelocityAdapter;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.apache.maven.MavenExecutionException;
@@ -11,7 +11,7 @@ import java.io.File;
 
 final class GroovyScriptUserData {
 
-    static void evaluate(MavenSession session, CoreApiAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
+    static void evaluate(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
         File script = getGroovyScript(session, customConfigurationSpec.groovyScriptName);
         if (script.exists()) {
             logger.debug("Evaluating custom user data Groovy script: {}", script);
@@ -35,7 +35,7 @@ final class GroovyScriptUserData {
         return new File(rootDir, ".mvn/" + scriptName + ".groovy");
     }
 
-    private static void evaluateGroovyScript(MavenSession session, CoreApiAdapter develocity, Logger logger, File groovyScript, String apiVariableName) throws MavenExecutionException {
+    private static void evaluateGroovyScript(MavenSession session, DevelocityAdapter develocity, Logger logger, File groovyScript, String apiVariableName) throws MavenExecutionException {
         try {
             Binding binding = prepareBinding(session, develocity, logger, apiVariableName);
             new GroovyShell(GroovyScriptUserData.class.getClassLoader(), binding).evaluate(groovyScript);
@@ -44,7 +44,7 @@ final class GroovyScriptUserData {
         }
     }
 
-    private static Binding prepareBinding(MavenSession session, CoreApiAdapter develocity, Logger logger, String apiVariableName) {
+    private static Binding prepareBinding(MavenSession session, DevelocityAdapter develocity, Logger logger, String apiVariableName) {
         Binding binding = new Binding();
         binding.setVariable("project", session.getTopLevelProject());
         binding.setVariable("session", session);

@@ -1,6 +1,6 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.enterprise.GradleEnterpriseApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.enterprise.GradleEnterpriseApiAdapter;
 import com.gradle.maven.extension.api.GradleEnterpriseApi;
 import com.gradle.maven.extension.api.GradleEnterpriseListener;
 import org.apache.maven.MavenExecutionException;

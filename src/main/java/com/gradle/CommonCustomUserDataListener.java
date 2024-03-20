@@ -1,8 +1,8 @@
 package com.gradle;
 
-import com.gradle.ccud.adapters.BuildCacheApiAdapter;
-import com.gradle.ccud.adapters.BuildScanApiAdapter;
-import com.gradle.ccud.adapters.CoreApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.BuildCacheApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter;
+import com.gradle.develocity.agent.maven.adapters.DevelocityAdapter;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
 
@@ -10,7 +10,7 @@ import static com.gradle.CommonCustomUserDataDevelocityLogger.LOGGER;
 
 abstract class CommonCustomUserDataListener {
 
-    protected void configure(CoreApiAdapter api, MavenSession session, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
+    protected void configure(DevelocityAdapter api, MavenSession session, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
         LOGGER.debug("Executing extension: " + getClass().getSimpleName());
         CustomDevelocityConfig customDevelocityConfig = new CustomDevelocityConfig();
 

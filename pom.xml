@@ -85,6 +85,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.gradle</groupId>
+            <artifactId>develocity-maven-extension-adapters</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>3.0.21</version>
