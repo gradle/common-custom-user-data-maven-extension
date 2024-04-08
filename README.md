@@ -35,12 +35,13 @@ See [here](.mvn/extensions.xml) for an example.
 
 This table details the version compatibility of the Common Custom User Data Maven extension with the Develocity Maven extension.
 
-| Common Custom User Data Maven extension versions | Develocity Maven extension versions        |
-| ------------------------------------------------ | ------------------------------------------ |
-| `1.8+`                                           | `1.11+`                                    |
-| `1.7` - `1.7.3`                                  | `1.10.1+`                                  |
-| `1.3` - `1.6`                                    | `1.6.5+`                                   |
-| `1.0` - `1.2`                                    | `1.0+`                                     |
+| Common Custom User Data Maven extension versions | Develocity Maven extension versions |
+|--------------------------------------------------|-------------------------------------|
+| `2.0+`                                           | `1.21+`                             |
+| `1.8` - `1.13`                                   | `1.11+`                             |
+| `1.7` - `1.7.3`                                  | `1.10.1+`                           |
+| `1.3` - `1.6`                                    | `1.6.5+`                            |
+| `1.0` - `1.2`                                    | `1.0+`                              |
 
 ## Captured data
 
