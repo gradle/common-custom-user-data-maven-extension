@@ -23,7 +23,7 @@ You can leverage this extension for your project in one of two ways:
 ## Applying the published extension
 
 The Common Custom User Data Maven extension is available in [Maven Central](https://search.maven.org/artifact/com.gradle/common-custom-user-data-maven-extension). This extension
-requires the [Develocity Maven extension](https://search.maven.org/artifact/com.gradle/gradle-enterprise-maven-extension) to also be applied in your build in order to have
+requires the [Develocity Maven extension](https://search.maven.org/artifact/com.gradle/develocity-maven-extension) to also be applied in your build in order to have
 an effect.
 
 In order for the Common Custom User Data Maven extension to become active, you need to register it in the `.mvn/extensions.xml` file in your root project. The `extensions.xml` file
