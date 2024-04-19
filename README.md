@@ -42,6 +42,8 @@ This table details the version compatibility of the Common Custom User Data Mave
 | `1.3` - `1.6`                                    | `1.6.5+`                                   |
 | `1.0` - `1.2`                                    | `1.0+`                                     |
 
+The above chart captures the minimum compatible versions. For the best experience with the Develocity Maven extension 1.21 or higher, we recommend using the Common Custom User Data Maven extension 2.0 or higher.
+
 ## Captured data
 
 The additional tags, links and custom values captured by this extension include:
@@ -58,7 +60,7 @@ captured and under which conditions.
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default. The additional configuration happens in a specific
 Groovy script. This is a good intermediate step before creating your own extension.
 
-The Common Custom User Data Maven extension checks for a `.mvn/gradle-enterprise-custom-user-data.groovy` or `.mvn/develocity-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
+The Common Custom User Data Maven extension checks for a `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
 - `gradleEnterprise/develocity` (type: [DevelocityAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/DevelocityAdapter.java)): _configure Develocity_
@@ -68,7 +70,7 @@ the script with the following bindings:
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
 
-See [here](.mvn/gradle-enterprise-custom-user-data.groovy) for an example.
+See [here](.mvn/develocity-custom-user-data.groovy) for an example.
 
 ## Developing a customized version of the extension
 
@@ -86,6 +88,26 @@ Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) 
 ## Changelog
 
 Refer to the [release history](https://github.com/gradle/common-custom-user-data-maven-extension/releases) to see detailed changes on the versions.
+
+## Breaking API changes
+
+When updating to the Common Custom User Data Maven extension 2.0, please take care of the following.
+
+1. Rename the `.mvn/gradle-enterprise-custom-user-data.groovy` to `.mvn/develocity-custom-user-data.groovy`.
+2. Use BuildScanApiAdapter instead of BuildScanApi.
+
+Example:
+```
+import com.gradle.maven.extension.api.scan.BuildScanApi
+
+buildScan.executeOnce('top-level-project') { BuildScanApi buildScanApi -> }
+```
+to 
+```
+import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter
+
+buildScan.executeOnce('top-level-project') { BuildScanApiAdapter buildScanApi -> }
+```
 
 ## Learn more
 
