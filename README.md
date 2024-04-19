@@ -63,7 +63,7 @@ Groovy script. This is a good intermediate step before creating your own extensi
 The Common Custom User Data Maven extension checks for a `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
 the script with the following bindings:
 
-- `gradleEnterprise/develocity` (type: [DevelocityAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/DevelocityAdapter.java)): _configure Develocity_
+- `develocity/gradleEnterprise` (type: [DevelocityAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/DevelocityAdapter.java)): _configure Develocity_
 - `buildScan` (type: [BuildScanApiAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/BuildScanApiAdapter.java)): _configure build scan publishing and enhance build scans_
 - `buildCache` (type: [BuildCacheApiAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/BuildCacheApiAdapter.java)): _configure build cache_
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
