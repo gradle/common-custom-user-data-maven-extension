@@ -94,15 +94,15 @@ Refer to the [release history](https://github.com/gradle/common-custom-user-data
 When updating to the Common Custom User Data Maven extension 2.0, please take care of the following.
 
 1. Rename the `.mvn/gradle-enterprise-custom-user-data.groovy` to `.mvn/develocity-custom-user-data.groovy`.
-2. Use BuildScanApiAdapter instead of BuildScanApi.
+2. Use `BuildScanApiAdapter` instead of `BuildScanApi`. See the example below:
 
-Example:
+`gradle-enterprise-custom-user-data.groovy`
 ```
 import com.gradle.maven.extension.api.scan.BuildScanApi
 
 buildScan.executeOnce('top-level-project') { BuildScanApi buildScanApi -> }
 ```
-to 
+`develocity-custom-user-data.groovy`
 ```
 import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter
 
