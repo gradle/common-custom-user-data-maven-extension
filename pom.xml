@@ -171,12 +171,6 @@
                             </excludes>
                         </filter>
                     </filters>
-                    <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                            <resource>LICENSE</resource>
-                            <file>${project.basedir}/LICENSE</file>
-                        </transformer>
-                    </transformers>
                 </configuration>
                 <executions>
                     <execution>
@@ -190,7 +184,16 @@
         </plugins>
         <resources>
             <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
                 <directory>${project.basedir}/release/distribution</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
             </resource>
         </resources>
     </build>
