@@ -1,0 +1,1 @@
+- [NEW] JAR contains LICENSE and NOTICE files
