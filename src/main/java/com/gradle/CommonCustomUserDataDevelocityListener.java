@@ -5,14 +5,14 @@ import com.gradle.develocity.agent.maven.api.DevelocityApi;
 import com.gradle.develocity.agent.maven.api.DevelocityListener;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
-import org.codehaus.plexus.component.annotations.Component;
+import org.eclipse.sisu.Description;
 
-@SuppressWarnings("unused")
-@Component(
-    role = DevelocityListener.class,
-    hint = "common-custom-user-data-develocity-listener",
-    description = "Captures common custom user data in Maven build scans"
-)
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+@Named("common-custom-user-data-develocity-listener")
+@Singleton
+@Description("Captures common custom user data in Maven Build Scan")
 public final class CommonCustomUserDataDevelocityListener extends CommonCustomUserDataListener implements DevelocityListener {
 
     @Override
