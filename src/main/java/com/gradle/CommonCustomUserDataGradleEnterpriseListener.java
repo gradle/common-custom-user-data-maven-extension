@@ -5,14 +5,14 @@ import com.gradle.maven.extension.api.GradleEnterpriseApi;
 import com.gradle.maven.extension.api.GradleEnterpriseListener;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
-import org.eclipse.sisu.Description;
+import org.codehaus.plexus.component.annotations.Component;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-@Named("common-custom-user-data-gradle-enterprise-listener")
-@Singleton
-@Description("Captures common custom user data in Maven Build Scan")
+@SuppressWarnings("unused")
+@Component(
+    role = GradleEnterpriseListener.class,
+    hint = "common-custom-user-data-gradle-enterprise-listener",
+    description = "Captures common custom user data in Maven build scans"
+)
 public final class CommonCustomUserDataGradleEnterpriseListener extends CommonCustomUserDataListener implements GradleEnterpriseListener {
 
     @Override
