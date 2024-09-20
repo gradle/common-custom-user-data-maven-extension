@@ -1,0 +1,18 @@
+<component-set>
+    <components>
+        <component>
+            <role>com.gradle.develocity.agent.maven.api.DevelocityListener</role>
+            <role-hint>common-custom-user-data-develocity-listener</role-hint>
+            <implementation>com.gradle.CommonCustomUserDataDevelocityListener</implementation>
+            <description>Captures common custom user data in Maven Build Scan</description>
+            <isolated-realm>false</isolated-realm>
+        </component>
+        <component>
+            <role>com.gradle.maven.extension.api.GradleEnterpriseListener</role>
+            <role-hint>common-custom-user-data-gradle-enterprise-listener</role-hint>
+            <implementation>com.gradle.CommonCustomUserDataGradleEnterpriseListener</implementation>
+            <description>Captures common custom user data in Maven Build Scan</description>
+            <isolated-realm>false</isolated-realm>
+        </component>
+    </components>
+</component-set>
