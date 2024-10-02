@@ -16,6 +16,7 @@
     </publishing>
     <obfuscation>
       <ipAddresses>#{{'0.0.0.0'}}</ipAddresses>
+      <hostname>#{isTrue(env['CI']) ? T(java.net.InetAddress).getLocalHost().getHostName() : 'Local agent'}</hostname>
     </obfuscation>
   </buildScan>
   <buildCache>
