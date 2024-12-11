@@ -253,6 +253,8 @@ final class CustomBuildScanEnhancements {
             }
 
             if (isGitLab()) {
+                Optional<String> projectUrl = envVariable("CI_PROJECT_URL");
+                Optional<String> commitSha = envVariable("CI_COMMIT_SHA");
                 buildScan.value("CI provider", "GitLab");
                 envVariable("CI_JOB_URL").ifPresent(url ->
                     buildScan.link("GitLab build", url));
@@ -262,6 +264,32 @@ final class CustomBuildScanEnhancements {
                     addCustomValueAndSearchLink(buildScan, "CI job", value));
                 envVariable("CI_JOB_STAGE").ifPresent(value ->
                     addCustomValueAndSearchLink(buildScan, "CI stage", value));
+                // 'git' might not be installed in gitlab docker runners, use the equivalent environment variables
+                commitSha.ifPresent(gitCommitId ->
+                        buildScan.value("Git commit id", gitCommitId));
+                envVariable("CI_COMMIT_SHORT_SHA").ifPresent(gitCommitShortId ->
+                        addCustomValueAndSearchLink(buildScan,
+                            "Git commit id",
+                            "Git commit id short",
+                            gitCommitShortId));
+                envVariable("CI_REPOSITORY_URL").ifPresent(gitRepo ->
+                    buildScan.value("Git repository", redactUserInfo(gitRepo)));
+                if (commitSha.isPresent() && projectUrl.isPresent()) {
+                    buildScan.link("GitLab source", projectUrl.get() + "/-/commit/" + commitSha.get());
+                }
+
+                // CI builds should have branch name defined in one of two ways
+                // see: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+                Stream.of(
+                    envVariable("CI_COMMIT_BRANCH"),
+                    envVariable("CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"))
+                        .filter(Optional::isPresent)
+                        .findFirst()
+                        .map(Optional::get)
+                        .ifPresent(gitBranchName -> {
+                            buildScan.tag(gitBranchName);
+                            buildScan.value("Git branch", gitBranchName);
+                });
             }
 
             if (isTravis()) {
