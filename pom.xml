@@ -77,9 +77,9 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
+            <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>3.0.24</version>
+            <version>4.0.26</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ivy</groupId>

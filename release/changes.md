@@ -1,0 +1,1 @@
+- [FIX] Update to Groovy 4 to handle Java 24
