@@ -51,6 +51,8 @@ final class CustomBuildScanEnhancements {
     private static final String SYSTEM_PROP_IDEA_VERSION = "idea.version";
     private static final String SYSTEM_PROP_ECLIPSE_BUILD_ID = "eclipse.buildId";
     private static final String SYSTEM_PROP_IDEA_SYNC_ACTIVE = "idea.sync.active";
+    private static final String ENV_VAR_VSCODE_PID = "VSCODE_PID";
+    private static final String ENV_VAR_VSCODE_INJECTION = "VSCODE_INJECTION";
 
     private final BuildScanApiAdapter buildScan;
     private final MavenSession mavenSession;
@@ -80,6 +82,8 @@ final class CustomBuildScanEnhancements {
             ideProperties.put(SYSTEM_PROP_IDEA_VERSION, sysProperty(SYSTEM_PROP_IDEA_VERSION));
             ideProperties.put(SYSTEM_PROP_ECLIPSE_BUILD_ID, sysProperty(SYSTEM_PROP_ECLIPSE_BUILD_ID));
             ideProperties.put(SYSTEM_PROP_IDEA_SYNC_ACTIVE, sysProperty(SYSTEM_PROP_IDEA_SYNC_ACTIVE));
+            ideProperties.put(ENV_VAR_VSCODE_PID, envVariable(ENV_VAR_VSCODE_PID));
+            ideProperties.put(ENV_VAR_VSCODE_INJECTION, envVariable(ENV_VAR_VSCODE_INJECTION));
 
             new CaptureIdeMetadataAction(buildScan, ideProperties).execute();
         }
@@ -106,6 +110,8 @@ final class CustomBuildScanEnhancements {
                 tagIde("IntelliJ IDEA", props.get(SYSTEM_PROP_IDEA_VERSION).get());
             } else if (props.get(SYSTEM_PROP_ECLIPSE_BUILD_ID).isPresent()) {
                 tagIde("Eclipse", props.get(SYSTEM_PROP_ECLIPSE_BUILD_ID).get());
+            } else if (props.get(ENV_VAR_VSCODE_PID).isPresent() || props.get(ENV_VAR_VSCODE_INJECTION).isPresent()) {
+                tagIde("VS Code", "");
             } else {
                 buildScan.tag("Cmd Line");
             }

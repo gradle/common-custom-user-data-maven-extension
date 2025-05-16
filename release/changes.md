@@ -1,0 +1,1 @@
+- [NEW] Added tagging VS Code builds

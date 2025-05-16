@@ -7,3 +7,4 @@ target/
 *.DS_Store
 /dependency-reduced-pom.xml
 /.mvn/.develocity/develocity-workspace-id
+.vscode/
