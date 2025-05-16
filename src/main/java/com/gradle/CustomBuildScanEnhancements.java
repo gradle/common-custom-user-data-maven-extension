@@ -110,9 +110,7 @@ final class CustomBuildScanEnhancements {
                 tagIde("IntelliJ IDEA", props.get(SYSTEM_PROP_IDEA_VERSION).get());
             } else if (props.get(SYSTEM_PROP_ECLIPSE_BUILD_ID).isPresent()) {
                 tagIde("Eclipse", props.get(SYSTEM_PROP_ECLIPSE_BUILD_ID).get());
-            } else if (props.get(ENV_VAR_VSCODE_PID).isPresent()) {
-                tagIde("VS Code", "");
-            } else if (props.get(ENV_VAR_VSCODE_INJECTION).isPresent()) {
+            } else if (props.get(ENV_VAR_VSCODE_PID).isPresent() || props.get(ENV_VAR_VSCODE_INJECTION).isPresent()) {
                 tagIde("VS Code", "");
             } else {
                 buildScan.tag("Cmd Line");
