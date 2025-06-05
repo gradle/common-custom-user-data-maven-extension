@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.util.Optional;
@@ -30,6 +31,13 @@ public class UtilsTest {
     public void testToWebRepoUri_enterpriseUri(String repositoryHost, String repositoryUri) {
         URI expectedWebRepoUri = URI.create(String.format("https://%s.acme.com/acme-inc/my-project", repositoryHost));
         assertEquals(Optional.of(expectedWebRepoUri), toWebRepoUri(String.format(repositoryUri, repositoryHost)));
+    }
+
+    @Test
+    public void testRedactUserInfoWithPercent() {
+        String url = "https://USER:pass%20word@hostname/";
+        String transformed = Utils.redactUserInfo(url);
+        assertEquals("https://hostname/", transformed);
     }
 
     private static class WebRepoUriArgumentsProvider implements ArgumentsProvider {

@@ -64,10 +64,15 @@ final class Utils {
 
     static String redactUserInfo(String url) {
         try {
-            String userInfo = new URI(url).getUserInfo();
-            return userInfo == null
-                ? url
-                : url.replace(userInfo + '@', "******@");
+            URI uri = new URI(url);
+            URI uriNoAuth = new URI(uri.getScheme(),
+                                    null,
+                                    uri.getHost(),
+                                    uri.getPort(),
+                                    uri.getPath(),
+                                    uri.getQuery(),
+                                    uri.getFragment());
+            return uriNoAuth.toString();
         } catch (URISyntaxException e) {
             return url;
         }
