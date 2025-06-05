@@ -241,7 +241,7 @@
                             <publishingServerId>ossrh</publishingServerId>
                             <autoPublish>true</autoPublish>
                             <waitUntil>published</waitUntil>
-                            <deploymentName>Common custom user data maven extension</deploymentName>
+                            <deploymentName>Common Custom User Data Maven Extension</deploymentName>
                         </configuration>
                     </plugin>
                 </plugins>
