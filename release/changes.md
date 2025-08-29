@@ -1,0 +1,1 @@
+- [NEW] Add GitHub run attempt as custom value to precisely identify GitHub Action run
