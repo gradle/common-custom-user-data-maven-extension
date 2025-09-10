@@ -244,26 +244,47 @@ final class CustomBuildScanEnhancements {
 
             if (isGitHubActions()) {
                 buildScan.value("CI provider", "GitHub Actions");
-                Optional<String> gitHubUrl = envVariable("GITHUB_SERVER_URL");
+
+                Optional<String> workflow = envVariable("GITHUB_WORKFLOW");
+                Optional<String> jobId = envVariable("GITHUB_JOB");
+                Optional<String> actionNameOrStepId = envVariable("GITHUB_ACTION");
+                Optional<String> runId = envVariable("GITHUB_RUN_ID");
+                Optional<String> runAttempt = envVariable("GITHUB_RUN_ATTEMPT");
+                Optional<String> runNumber = envVariable("GITHUB_RUN_NUMBER");
+                Optional<String> headRef = envVariable("GITHUB_HEAD_REF").filter(value -> !value.isEmpty());
+                Optional<String> serverUrl = envVariable("GITHUB_SERVER_URL");
                 Optional<String> gitRepository = envVariable("GITHUB_REPOSITORY");
-                Optional<String> gitHubRunId = envVariable("GITHUB_RUN_ID");
-                if (gitHubUrl.isPresent() && gitRepository.isPresent() && gitHubRunId.isPresent()) {
-                    buildScan.link("GitHub Actions build", gitHubUrl.get() + "/" + gitRepository.get() + "/actions/runs/" + gitHubRunId.get());
-                }
-                envVariable("GITHUB_WORKFLOW").ifPresent(value ->
-                    addCustomValueAndSearchLink(buildScan, "CI workflow", value));
-                envVariable("GITHUB_RUN_ID").ifPresent(value ->
-                        addCustomValueAndSearchLink(buildScan, "CI run", value));
-                envVariable("GITHUB_RUN_ATTEMPT").ifPresent(value ->
-                        buildScan.value("CI run attempt", value));
-                envVariable("GITHUB_RUN_NUMBER").ifPresent(value ->
-                        buildScan.value("CI run number", value));
-                envVariable("GITHUB_ACTION").ifPresent(value ->
-                        addCustomValueAndSearchLink(buildScan, "CI step", value));
-                envVariable("GITHUB_JOB").ifPresent(value ->
+
+                workflow.ifPresent(value ->
+                        addCustomValueAndSearchLink(buildScan, "CI workflow", value));
+                jobId.ifPresent(value ->
                         addCustomValueAndSearchLink(buildScan, "CI job", value));
-                envVariable("GITHUB_HEAD_REF").filter(value -> !value.isEmpty()).ifPresent(value ->
+                actionNameOrStepId.ifPresent(value ->
+                        addCustomValueAndSearchLink(buildScan, "CI step", value));
+
+                runId.ifPresent(value ->
+                        buildScan.value("CI run", value));
+                runAttempt.ifPresent(value ->
+                        buildScan.value("CI run attempt", value));
+                runNumber.ifPresent(value ->
+                        buildScan.value("CI run number", value));
+                headRef.ifPresent(value ->
                         buildScan.value("PR branch", value));
+
+                if (serverUrl.isPresent() && gitRepository.isPresent() && runId.isPresent()) {
+                    StringBuilder githubActionsBuild = new StringBuilder(serverUrl.get())
+                            .append("/").append(gitRepository.get())
+                            .append("/actions/runs/").append(runId.get());
+                    runAttempt.ifPresent(value -> githubActionsBuild.append("/attempts/").append(value));
+                    buildScan.link("GitHub Actions build", githubActionsBuild.toString());
+                }
+
+                if (runId.isPresent()) {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("CI run", runId.get());
+                    runAttempt.ifPresent(value -> params.put("CI run attempt", value));
+                    addSearchLink(buildScan, "CI run", params);
+                }
             }
 
             if (isGitLab()) {
