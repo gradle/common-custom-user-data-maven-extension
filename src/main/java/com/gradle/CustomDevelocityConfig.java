@@ -13,7 +13,7 @@ final class CustomDevelocityConfig {
     void configureDevelocity(DevelocityAdapter develocity) {
         /* Example of Develocity configuration
 
-        develocity.setServer("https://enterprise-samples.gradle.com");
+        develocity.setServer("https://develocity.example.com");
         develocity.setAllowUntrustedServer(false);
 
         */
