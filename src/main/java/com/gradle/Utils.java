@@ -30,6 +30,9 @@ final class Utils {
     }
 
     static Optional<String> projectProperty(MavenSession mavenSession, String name) {
+        if (mavenSession == null) {
+            return Optional.empty();
+        }
         String value = mavenSession.getUserProperties().getProperty(name);
         return Optional.ofNullable(value);
     }
