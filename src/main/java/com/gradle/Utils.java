@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.gradle.CommonCustomUserDataDevelocityLogger.LOGGER;
+
 final class Utils {
 
     private static final Pattern GIT_REPO_URI_PATTERN = Pattern.compile("^(?:(?:https://|git://)(?:.+:.+@)?|(?:ssh)?.*?@)(.*?(?:github|gitlab).*?)(?:/|:[0-9]*?/|:)(.*?)(?:\\.git)?$");
@@ -31,6 +33,7 @@ final class Utils {
 
     static Optional<String> projectProperty(MavenSession mavenSession, String name) {
         if (mavenSession == null) {
+            LOGGER.debug("Maven session is null; returning empty property for '{}'", name);
             return Optional.empty();
         }
         String value = mavenSession.getUserProperties().getProperty(name);
