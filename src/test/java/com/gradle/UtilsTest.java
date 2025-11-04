@@ -1,6 +1,7 @@
 package com.gradle;
 
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,6 +39,12 @@ public class UtilsTest {
     @ArgumentsSource(UserInfoArgumentsProvider.class)
     public void testUserInfoRedacted(String inputUrl, String expectedRedactedUrl) {
         assertEquals(expectedRedactedUrl, Utils.redactUserInfo(inputUrl).orElse(null));
+    }
+
+    @Test
+    void testProjectProperty_nullSession_returnsEmpty() {
+        Optional<String> result = Utils.projectProperty(null, "my.prop");
+        assertEquals(Optional.empty(), result);
     }
 
     private static class WebRepoUriArgumentsProvider implements ArgumentsProvider {
