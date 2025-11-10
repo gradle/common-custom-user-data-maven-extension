@@ -1,0 +1,1 @@
+- [FIX] Added a null-safety check to handle cases where the Maven session may be null
