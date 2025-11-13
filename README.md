@@ -61,9 +61,9 @@ You can apply additional configuration beyond what is contributed by the Common 
 The extension evaluates Groovy scripts from two locations:
 
 1. A `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` in your root project
-2. Any files matching `*.groovy` in the directory `~/.mvn/.develocity/custom-user-data/`
+2. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.gradle.com/develocity/maven-extension/current/#anatomy_of_the_develocity_directory), `${user.home}/.m2/.develocity` by default
 
-Any matching files are evaluated with the following bindings:
+All matching files are evaluated with the following bindings:
 
 - `develocity/gradleEnterprise` (type: [DevelocityAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/DevelocityAdapter.java)): _configure Develocity_
 - `buildScan` (type: [BuildScanApiAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/BuildScanApiAdapter.java)): _configure build scan publishing and enhance build scans_
@@ -72,7 +72,7 @@ Any matching files are evaluated with the following bindings:
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
 
-The Groovy scripts are evaluated in the exact order listed above, with the scripts in `~/.mvn/.develocity/custom-user-data/` being executed in alphabetical order.
+The Groovy scripts are evaluated in the exact order listed above, with the scripts in the `custom-user-data` directory being executed in alphabetical order.
 
 See [here](.mvn/develocity-custom-user-data.groovy) for an example.
 
