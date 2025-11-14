@@ -17,8 +17,17 @@ import java.util.stream.Collectors;
 final class GroovyScriptUserData {
 
     static void evaluate(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
-        evaluateGroovyScriptInRootProject(session, develocity, logger, customConfigurationSpec);
         evaluateGroovyScriptsInDevelocityStorageDirectory(session, develocity, logger, customConfigurationSpec);
+        evaluateGroovyScriptInRootProject(session, develocity, logger, customConfigurationSpec);
+    }
+
+    private static void evaluateGroovyScriptsInDevelocityStorageDirectory(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
+        File customUserDataDirectory = develocity.getStorageDirectory().resolve("custom-user-data").toFile();
+        List<File> scripts = getGroovyScripts(customUserDataDirectory);
+        for (File script : scripts) {
+            logger.debug("Evaluating custom user data Groovy script: {}", script);
+            evaluateGroovyScript(session, develocity, logger, script, customConfigurationSpec.apiVariableName);
+        }
     }
 
     private static void evaluateGroovyScriptInRootProject(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
@@ -37,15 +46,6 @@ final class GroovyScriptUserData {
             } else {
                 logger.debug("Skipping evaluation of custom user data Groovy script because it does not exist: " + fallbackScript);
             }
-        }
-    }
-
-    private static void evaluateGroovyScriptsInDevelocityStorageDirectory(MavenSession session, DevelocityAdapter develocity, Logger logger, CustomConfigurationSpec customConfigurationSpec) throws MavenExecutionException {
-        File customUserDataDirectory = develocity.getStorageDirectory().resolve("custom-user-data").toFile();
-        List<File> scripts = getGroovyScripts(customUserDataDirectory);
-        for (File script : scripts) {
-            logger.debug("Evaluating custom user data Groovy script: {}", script);
-            evaluateGroovyScript(session, develocity, logger, script, customConfigurationSpec.apiVariableName);
         }
     }
 

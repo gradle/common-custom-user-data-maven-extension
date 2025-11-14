@@ -60,8 +60,8 @@ captured and under which conditions.
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default.
 The extension evaluates Groovy scripts from two locations:
 
-1. A `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` in your root project
-2. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.gradle.com/develocity/maven-extension/current/#anatomy_of_the_develocity_directory), `${user.home}/.m2/.develocity` by default
+1. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.gradle.com/develocity/maven-extension/current/#anatomy_of_the_develocity_directory), `${user.home}/.m2/.develocity` by default
+2. A `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` in your root project
 
 All matching files are evaluated with the following bindings:
 
