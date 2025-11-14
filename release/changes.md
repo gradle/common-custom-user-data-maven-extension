@@ -1,1 +1,1 @@
-- [NEW] Add support for evaluating one or more Groovy scripts in the Develocity storage directory 
+
