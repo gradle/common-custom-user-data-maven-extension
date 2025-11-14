@@ -57,11 +57,13 @@ captured and under which conditions.
 
 ## Capturing additional tags, links and values in your build scans
 
-You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default. The additional configuration happens in a specific
-Groovy script. This is a good intermediate step before creating your own extension.
+You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default.
+The extension evaluates Groovy scripts from two locations:
 
-The Common Custom User Data Maven extension checks for a `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` Groovy script in your root project. If the file exists, it evaluates
-the script with the following bindings:
+1. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.gradle.com/develocity/maven-extension/current/#anatomy_of_the_develocity_directory), `${user.home}/.m2/.develocity` by default
+2. A `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` in your root project
+
+All matching files are evaluated with the following bindings:
 
 - `develocity/gradleEnterprise` (type: [DevelocityAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/DevelocityAdapter.java)): _configure Develocity_
 - `buildScan` (type: [BuildScanApiAdapter](https://github.com/gradle/develocity-agent-adapters/blob/main/develocity-maven-extension-adapters/src/compatibilityApi/java/com/gradle/develocity/agent/maven/adapters/BuildScanApiAdapter.java)): _configure build scan publishing and enhance build scans_
@@ -69,6 +71,8 @@ the script with the following bindings:
 - `log` (type: [`Logger`](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)): _write to the build log_
 - `project` (type: [`MavenProject`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/project/MavenProject.html)): _the top-level Maven project_
 - `session` (type: [`MavenSession`](https://maven.apache.org/ref/current/maven-core/apidocs/org/apache/maven/execution/MavenSession.html)): _the Maven session_
+
+The Groovy scripts are evaluated in the exact order listed above, with the scripts in the `custom-user-data` directory being executed in alphabetical order.
 
 See [here](.mvn/develocity-custom-user-data.groovy) for an example.
 
