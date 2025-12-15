@@ -37,7 +37,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Download plugin to maven local
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: common-custom-user-data-maven-plugin
           path: ~/.m2/repository/com/gradle
