@@ -2,6 +2,9 @@ name: Verify Build
 
 on: [ push, pull_request, workflow_dispatch ]
 
+permissions:
+  contents: read
+
 jobs:
   verification:
     name: Verification
