@@ -512,20 +512,20 @@ final class CustomBuildScanEnhancements {
         Optional<String> gemini = envVariable("GEMINI_CLI");
 
         claudeCode.ifPresent(v -> {
-            buildScan.tag("AI Agent");
-            buildScan.value("AI Agent", "Claude Code");
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Claude Code");
         });
         if (codexSandbox.isPresent() || codexThreadId.isPresent()) {
-            buildScan.tag("AI Agent");
-            buildScan.value("AI Agent", "Codex");
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Codex");
         }
         openCode.ifPresent(v -> {
-            buildScan.tag("AI Agent");
-            buildScan.value("AI Agent", "OpenCode");
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "OpenCode");
         });
         gemini.ifPresent(v -> {
-            buildScan.tag("AI Agent");
-            buildScan.value("AI Agent", "Gemini CLI");
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Gemini CLI");
         });
     }
 
