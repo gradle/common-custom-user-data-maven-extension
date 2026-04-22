@@ -1,3 +1,4 @@
 - [NEW] Add AI tag to the Build Scan when invoked by an AI Agent
 - [NEW] Add custom value to the Build Scan indicating which AI Agent invoked the build
 - [NEW] Add link in Build Scan to GitHub PR
+- [NEW] For GitHub PRs, capture `GITHUB_BASE_REF` as the value `PR base branch`
