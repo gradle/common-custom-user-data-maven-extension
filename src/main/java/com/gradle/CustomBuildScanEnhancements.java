@@ -71,6 +71,7 @@ final class CustomBuildScanEnhancements {
         captureCiMetadata();
         captureGitMetadata();
         captureSkipTestsFlags();
+        captureAgentMetadata();
     }
 
     private void captureOs() {
@@ -512,6 +513,33 @@ final class CustomBuildScanEnhancements {
             if (value.isEmpty() || Boolean.valueOf(value).equals(Boolean.TRUE)) {
                 buildScan.value("switches." + property, "On");
             }
+        });
+    }
+
+    private void captureAgentMetadata() {
+        Optional<String> claudeCode = envVariable("CLAUDECODE");
+        // Codex environment variables are not officially documented.
+        // This is best effort detection until something more official is implemented by Codex.
+        Optional<String> codexSandbox = envVariable("CODEX_SANDBOX_NETWORK_DISABLED");
+        Optional<String> codexThreadId = envVariable("CODEX_THREAD_ID");
+        Optional<String> openCode = envVariable("OPENCODE");
+        Optional<String> gemini = envVariable("GEMINI_CLI");
+
+        claudeCode.ifPresent(v -> {
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Claude Code");
+        });
+        if (codexSandbox.isPresent() || codexThreadId.isPresent()) {
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Codex");
+        }
+        openCode.ifPresent(v -> {
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "OpenCode");
+        });
+        gemini.ifPresent(v -> {
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Gemini CLI");
         });
     }
 
