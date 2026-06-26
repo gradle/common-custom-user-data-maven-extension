@@ -1,1 +1,1 @@
-- [NEW] TBD
+- [NEW] Capture Cursor as an AI agent via the `CURSOR_AGENT` environment variable
