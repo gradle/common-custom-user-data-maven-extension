@@ -30,7 +30,7 @@
     <distributionManagement>
         <site>
             <id>Documentation</id>
-            <url>https://docs.gradle.com</url>
+            <url>https://docs.develocity.ai</url>
         </site>
     </distributionManagement>
 
@@ -38,7 +38,7 @@
         <developer>
             <name>The Gradle team</name>
             <organization>Gradle Inc.</organization>
-            <organizationUrl>https://gradle.com</organizationUrl>
+            <organizationUrl>https://develocity.ai</organizationUrl>
         </developer>
     </developers>
 

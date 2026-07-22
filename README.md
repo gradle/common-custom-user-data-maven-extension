@@ -61,7 +61,7 @@ captured and under which conditions.
 You can apply additional configuration beyond what is contributed by the Common Custom User Data Maven extension by default.
 The extension evaluates Groovy scripts from two locations:
 
-1. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.gradle.com/develocity/maven/current/maven-extension/#anatomy-of-the-develocity-directory), `${user.home}/.m2/.develocity` by default
+1. Any `*.groovy` files in the `custom-user-data` directory, located within the [Develocity storage directory](https://docs.develocity.ai/maven/current/maven-extension/#anatomy-of-the-develocity-directory), `${user.home}/.m2/.develocity` by default
 2. A `.mvn/develocity-custom-user-data.groovy` or `.mvn/gradle-enterprise-custom-user-data.groovy` in your root project
 
 All matching files are evaluated with the following bindings:
@@ -88,7 +88,7 @@ This approach has a number of benefits:
 If your customized extension provides all required Develocity configuration, then a consumer project will get all the benefits of Develocity simply by applying the extension. The
 project sources provide a good template to get started with your own extension.
 
-Refer to the [Javadoc](https://docs.gradle.com/enterprise/maven-extension/api/) for more details on the key types available for use.
+Refer to the [Javadoc](https://docs.develocity.ai/maven/current/javadoc/) for more details on the key types available for use.
 
 ## Changelog
 
@@ -130,5 +130,5 @@ The Develocity Common Custom User Data Maven extension is open-source software r
 [develocity-build-validation-scripts]: https://github.com/gradle/develocity-build-validation-scripts
 [develocity-oss-projects]: https://github.com/gradle/develocity-oss-projects
 [quarkus-build-caching-extension]: https://github.com/gradle/quarkus-build-caching-extension
-[develocity]: https://gradle.com/develocity
+[develocity]: https://develocity.ai
 [apache-license]: https://www.apache.org/licenses/LICENSE-2.0.html
