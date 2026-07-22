@@ -30,7 +30,7 @@
     <distributionManagement>
         <site>
             <id>Documentation</id>
-            <url>https://docs.develocity.ai/</url>
+            <url>https://docs.develocity.ai</url>
         </site>
     </distributionManagement>
 
