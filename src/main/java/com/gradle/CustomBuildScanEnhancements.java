@@ -528,6 +528,8 @@ final class CustomBuildScanEnhancements {
         Optional<String> cursor = envVariable("CURSOR_AGENT");
         Optional<String> openCode = envVariable("OPENCODE");
         Optional<String> gemini = envVariable("GEMINI_CLI");
+        Optional<String> copilotCli = envVariable("COPILOT_CLI");
+        Optional<String> copilotAgent = envVariable("COPILOT_AGENT");
 
         claudeCode.ifPresent(v -> {
             buildScan.tag("AI");
@@ -549,6 +551,10 @@ final class CustomBuildScanEnhancements {
             buildScan.tag("AI");
             buildScan.value("AI agent", "Gemini CLI");
         });
+        if (copilotCli.isPresent() || copilotAgent.isPresent()) {
+            buildScan.tag("AI");
+            buildScan.value("AI agent", "Copilot");
+        }
     }
 
     private static void addCustomValueAndSearchLink(BuildScanApiAdapter buildScan, String name, String value) {
