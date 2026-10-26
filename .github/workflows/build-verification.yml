@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Get GitHub OIDC token for setup-maven
+      - name: Get GitHub OIDC token for Develocity
         id: develocity-oidc
         shell: bash
         run: |
@@ -30,14 +30,15 @@ jobs:
             --data-urlencode "audience=https://ge.solutions-team.gradle.com" \
             "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r .value)
           echo "::add-mask::$token"
-          echo "access-key=ge.solutions-team.gradle.com=$token" >> "$GITHUB_OUTPUT"
-      - name: Set up Maven
-        uses: gradle/develocity-actions/setup-maven@9d8792ab22712b19790c2abce53e9ebb2694c312 # v2.5
-        with:
-          develocity-access-key: ${{ steps.develocity-oidc.outputs.access-key }}
-          add-pr-comment: false
+          # Exchange the OIDC token for a short-lived Develocity access token, for builds that read DEVELOCITY_ACCESS_KEY directly
+          access_token=$(curl -sSf --retry 3 -X POST -H "Authorization: Bearer $token" \
+            "https://ge.solutions-team.gradle.com/api/auth/token?expiresInHours=2")
+          echo "::add-mask::$access_token"
+          echo "token-access-key=ge.solutions-team.gradle.com=$access_token" >> "$GITHUB_OUTPUT"
       - name: Build and publish to Maven Local with Maven
         run: ./mvnw clean install -B
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ steps.develocity-oidc.outputs.token-access-key }}
       - name: Upload published plugin
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
@@ -87,7 +88,7 @@ jobs:
               <version>1.0.0-SNAPSHOT</version>
             </project>
           """ > ${{ runner.temp }}/pom.xml
-      - name: Get GitHub OIDC token for setup-maven
+      - name: Get GitHub OIDC token for Develocity
         id: develocity-oidc
         shell: bash
         run: |
@@ -99,13 +100,14 @@ jobs:
             --data-urlencode "audience=https://ge.solutions-team.gradle.com" \
             "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r .value)
           echo "::add-mask::$token"
-          echo "access-key=ge.solutions-team.gradle.com=$token" >> "$GITHUB_OUTPUT"
-      - name: Set up Maven
-        uses: gradle/develocity-actions/setup-maven@9d8792ab22712b19790c2abce53e9ebb2694c312 # v2.5
-        with:
-          develocity-access-key: ${{ steps.develocity-oidc.outputs.access-key }}
-          add-pr-comment: false
+          # Exchange the OIDC token for a short-lived Develocity access token, for builds that read DEVELOCITY_ACCESS_KEY directly
+          access_token=$(curl -sSf --retry 3 -X POST -H "Authorization: Bearer $token" \
+            "https://ge.solutions-team.gradle.com/api/auth/token?expiresInHours=2")
+          echo "::add-mask::$access_token"
+          echo "token-access-key=ge.solutions-team.gradle.com=$access_token" >> "$GITHUB_OUTPUT"
       - name: Run a build with the locally published plugin
         id: build-with-local-plugin
         run: mvn validate
         working-directory: ${{ runner.temp }}
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ steps.develocity-oidc.outputs.token-access-key }}
