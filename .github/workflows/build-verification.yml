@@ -32,9 +32,9 @@ jobs:
           echo "::add-mask::$token"
           # Exchange the OIDC token for a short-lived Develocity access token, for builds that read DEVELOCITY_ACCESS_KEY directly
           access_token=$(curl -sSf --retry 3 -X POST -H "Authorization: Bearer $token" \
-            "https://solutions.develocity.cloud/api/auth/token?expiresInHours=2")
+            "https://ge.solutions-team.gradle.com/api/auth/token?expiresInHours=2")
           echo "::add-mask::$access_token"
-          echo "token-access-key=solutions.develocity.cloud=$access_token" >> "$GITHUB_OUTPUT"
+          echo "token-access-key=ge.solutions-team.gradle.com=$access_token" >> "$GITHUB_OUTPUT"
       - name: Build and publish to Maven Local with Maven
         run: ./mvnw clean install -B
         env:
@@ -102,9 +102,9 @@ jobs:
           echo "::add-mask::$token"
           # Exchange the OIDC token for a short-lived Develocity access token, for builds that read DEVELOCITY_ACCESS_KEY directly
           access_token=$(curl -sSf --retry 3 -X POST -H "Authorization: Bearer $token" \
-            "https://solutions.develocity.cloud/api/auth/token?expiresInHours=2")
+            "https://ge.solutions-team.gradle.com/api/auth/token?expiresInHours=2")
           echo "::add-mask::$access_token"
-          echo "token-access-key=solutions.develocity.cloud=$access_token" >> "$GITHUB_OUTPUT"
+          echo "token-access-key=ge.solutions-team.gradle.com=$access_token" >> "$GITHUB_OUTPUT"
       - name: Run a build with the locally published plugin
         id: build-with-local-plugin
         run: mvn validate
