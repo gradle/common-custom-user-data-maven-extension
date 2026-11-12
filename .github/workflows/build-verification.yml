@@ -24,6 +24,10 @@ jobs:
           develocity-edge-url: https://usw2-edge.solutions-team.gradle.com
           develocity-auth: workload-identity
           develocity-oidc-audience: https://solutions.develocity.cloud
+          # Auto-generated image names omit the repository, so they collide across repositories on the same Edge
+          image-names: |
+            ${{ github.repository }}~${{ github.workflow }}~${{ github.job }}~${{ github.ref }}~${{ runner.os }}~${{ runner.arch }}
+            ${{ github.repository }}~${{ github.workflow }}~${{ github.job }}~refs/heads/${{ github.base_ref || github.event.repository.default_branch }}~${{ runner.os }}~${{ runner.arch }}
       - name: Get GitHub OIDC token for Develocity
         id: develocity-oidc
         shell: bash
@@ -69,6 +73,10 @@ jobs:
           develocity-edge-url: https://usw2-edge.solutions-team.gradle.com
           develocity-auth: workload-identity
           develocity-oidc-audience: https://solutions.develocity.cloud
+          # Auto-generated image names omit the repository, so they collide across repositories on the same Edge
+          image-names: |
+            ${{ github.repository }}~${{ github.workflow }}~${{ github.job }}~${{ github.ref }}~${{ runner.os }}~${{ runner.arch }}
+            ${{ github.repository }}~${{ github.workflow }}~${{ github.job }}~refs/heads/${{ github.base_ref || github.event.repository.default_branch }}~${{ runner.os }}~${{ runner.arch }}
       - name: Download plugin to maven local
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
