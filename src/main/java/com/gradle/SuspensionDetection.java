@@ -7,6 +7,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.LongSupplier;
 
+import static com.gradle.CommonCustomUserDataDevelocityLogger.LOGGER;
+
 final class SuspensionDetection {
 
     static final long SAMPLE_INTERVAL_MILLIS = 1_000;
@@ -29,6 +31,7 @@ final class SuspensionDetection {
         buildScan.buildFinished(result -> {
             long suspendedMillis = stopSampling(started);
             if (suspendedMillis > 0) {
+                LOGGER.debug("The build process was suspended for {} ms", suspendedMillis);
                 buildScan.tag("Suspended");
                 buildScan.value("Suspended time (ms)", Long.toString(suspendedMillis));
             }
