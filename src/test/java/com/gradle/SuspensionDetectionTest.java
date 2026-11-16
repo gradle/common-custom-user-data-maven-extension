@@ -1,5 +1,6 @@
 package com.gradle;
 
+import com.gradle.develocity.agent.maven.adapters.BuildResultAdapter;
 import com.gradle.develocity.agent.maven.adapters.BuildScanApiAdapter;
 import org.junit.jupiter.api.Test;
 
@@ -102,30 +103,50 @@ public class SuspensionDetectionTest {
     }
 
     @Test
-    public void keepsSessionsThatShareAJvmApart() throws Exception {
-        Set<Thread> beforeFirst = samplerThreads();
-        RecordingBuildScan first = new RecordingBuildScan();
-        StepClock firstClock = new StepClock();
-        SuspensionDetection.apply(first.adapter, firstClock, TimeUnit.HOURS.toMillis(1), THRESHOLD);
-        Thread firstSampler = onlyNewThread(beforeFirst);
+    public void tagsAFailedBuild() {
+        long interval = TimeUnit.HOURS.toMillis(1);
+        RecordingBuildScan buildScan = new RecordingBuildScan();
+        StepClock clock = new StepClock();
+        SuspensionDetection.apply(buildScan.adapter, clock, interval, THRESHOLD);
 
-        Set<Thread> beforeSecond = samplerThreads();
-        RecordingBuildScan second = new RecordingBuildScan();
-        SuspensionDetection.apply(second.adapter, new StepClock(), TimeUnit.HOURS.toMillis(1), THRESHOLD);
-        Thread secondSampler = onlyNewThread(beforeSecond);
+        clock.time.addAndGet(interval + 30_000);
+        buildScan.finish((BuildResultAdapter) () -> Collections.singletonList(new RuntimeException("boom")));
 
-        firstClock.time.addAndGet(TimeUnit.HOURS.toMillis(1) + 30_000);
-        first.finish();
-        firstSampler.join(TimeUnit.SECONDS.toMillis(AWAIT_SECONDS));
+        assertEquals(Collections.singletonList("Suspended"), buildScan.tags);
+        assertEquals(Collections.singletonList("Suspended time (ms)=30000"), buildScan.values);
+    }
 
-        assertFalse(firstSampler.isAlive());
-        assertTrue(secondSampler.isAlive());
-        assertEquals(Collections.singletonList("Suspended time (ms)=30000"), first.values);
+    @Test
+    public void nextBuildStopsTheSamplerOfABuildThatNeverFinished() throws Exception {
+        Set<Thread> before = samplerThreads();
+        SuspensionDetection.apply(new RecordingBuildScan().adapter, new StepClock(), INTERVAL_MILLIS, THRESHOLD);
+        Thread leftover = onlyNewThread(before);
 
-        second.finish();
+        RecordingBuildScan next = new RecordingBuildScan();
+        SuspensionDetection.apply(next.adapter, new StepClock(), INTERVAL_MILLIS, THRESHOLD);
+        leftover.join(TimeUnit.SECONDS.toMillis(AWAIT_SECONDS));
 
-        assertEquals(Collections.emptyList(), second.tags);
-        assertEquals(Collections.emptyList(), second.values);
+        assertFalse(leftover.isAlive());
+
+        next.finish();
+    }
+
+    @Test
+    public void lateFinishOfAnEarlierBuildLetsTheNextBuildStopTheCurrentSampler() throws Exception {
+        RecordingBuildScan earlier = new RecordingBuildScan();
+        SuspensionDetection.apply(earlier.adapter, new StepClock(), INTERVAL_MILLIS, THRESHOLD);
+        Set<Thread> before = samplerThreads();
+        SuspensionDetection.apply(new RecordingBuildScan().adapter, new StepClock(), INTERVAL_MILLIS, THRESHOLD);
+        Thread unfinished = onlyNewThread(before);
+        earlier.finish();
+
+        RecordingBuildScan next = new RecordingBuildScan();
+        SuspensionDetection.apply(next.adapter, new StepClock(), INTERVAL_MILLIS, THRESHOLD);
+        unfinished.join(TimeUnit.SECONDS.toMillis(AWAIT_SECONDS));
+
+        assertFalse(unfinished.isAlive());
+
+        next.finish();
     }
 
     private static Set<Thread> samplerThreads() {
@@ -195,8 +216,12 @@ public class SuspensionDetectionTest {
             });
 
         void finish() {
+            finish(null);
+        }
+
+        void finish(BuildResultAdapter result) {
             for (Consumer<Object> callback : finished) {
-                callback.accept(null);
+                callback.accept(result);
             }
         }
 

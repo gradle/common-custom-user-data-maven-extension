@@ -15,6 +15,8 @@ final class SuspensionDetection {
 
     static final String THREAD_NAME = "Common Custom User Data suspension detector";
 
+    private static Sampler sampler;
+
     private SuspensionDetection() {
     }
 
@@ -22,16 +24,32 @@ final class SuspensionDetection {
         apply(buildScan, System::currentTimeMillis, SAMPLE_INTERVAL_MILLIS, THRESHOLD_MILLIS);
     }
 
-    // Each build gets its own sampler, so sessions that share a JVM under mvnd do not share suspended time
     static void apply(BuildScanApiAdapter buildScan, LongSupplier wallClockMillis, long intervalMillis, long thresholdMillis) {
-        Sampler sampler = new Sampler(wallClockMillis, intervalMillis, thresholdMillis);
+        Sampler started = startSampling(wallClockMillis, intervalMillis, thresholdMillis);
         buildScan.buildFinished(result -> {
-            long suspendedMillis = sampler.stop();
+            long suspendedMillis = stopSampling(started);
             if (suspendedMillis > 0) {
                 buildScan.tag("Suspended");
                 buildScan.value("Suspended time (ms)", Long.toString(suspendedMillis));
             }
         });
+    }
+
+    // The Develocity extension skips buildFinished when Build Scan capture is disabled,
+    // so the next build in a reused JVM such as an mvnd daemon stops the sampler instead
+    private static synchronized Sampler startSampling(LongSupplier wallClockMillis, long intervalMillis, long thresholdMillis) {
+        if (sampler != null) {
+            sampler.stop();
+        }
+        sampler = new Sampler(wallClockMillis, intervalMillis, thresholdMillis);
+        return sampler;
+    }
+
+    private static synchronized long stopSampling(Sampler finished) {
+        if (sampler == finished) {
+            sampler = null;
+        }
+        return finished.stop();
     }
 
     private static final class Sampler {
