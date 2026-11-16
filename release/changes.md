@@ -1,1 +1,1 @@
-- [NEW] TBD
+- [NEW] Capture the `Suspended` tag and the `Suspended time (ms)` value for builds suspended for 10 seconds or more, for example while the machine slept
