@@ -30,6 +30,9 @@ abstract class CommonCustomUserDataListener {
         LOGGER.debug("Finished configuring build cache");
 
         GroovyScriptUserData.evaluate(session, api, LOGGER, customConfigurationSpec);
+
+        // Last, so that a failing Groovy script leaves no sampler thread behind
+        SuspensionDetection.apply(buildScan);
     }
 
 }

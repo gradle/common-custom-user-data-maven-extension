@@ -52,8 +52,10 @@ The additional tags, links and custom values captured by this extension include:
 - A tag representing how the build was invoked, be that from your IDE (IDEA, Eclipse) or from the command-line
 - A tag representing builds run on CI, together with a set of tags, links and custom values specific to the CI server running the build
 - For Git repositories, information on the commit id, branch name, status, and whether the checkout is dirty or not
+- A tag and a custom value with the suspended time for builds whose process was suspended, for example because the machine slept during the build
 
-See [CustomBuildScanEnhancements.java](./src/main/java/com/gradle/CustomBuildScanEnhancements.java) for details on what data is
+See [CustomBuildScanEnhancements.java](./src/main/java/com/gradle/CustomBuildScanEnhancements.java) and
+[SuspensionDetection.java](./src/main/java/com/gradle/SuspensionDetection.java) for details on what data is
 captured and under which conditions.
 
 ## Capturing additional tags, links and values in your build scans
